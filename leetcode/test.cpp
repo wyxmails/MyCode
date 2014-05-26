@@ -14,5 +14,6 @@ int main(){
 	cout << "single: " << num << endl;
 	int c = 2^2;
 	cout << c << endl;
+	cout <<"mod: " <<  (-9)%10 << endl;
 	return 0;
 }
