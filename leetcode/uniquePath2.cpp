@@ -1,3 +1,6 @@
+#include <iostream>
+#include <vector>
+using namespace std;
 /*Unique Paths II
  Follow up for "Unique Paths":
  Now consider if some obstacles are added to the grids. 
@@ -36,4 +39,27 @@ int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid) {
 		}
 	}
 	return arr[0];
+}
+int uniquePathsWithObstacles2(vector<vector<int> > &obstacleGrid) {
+	int m = obstacleGrid.size();
+	if(m==0) return 0;
+	int n = obstacleGrid[0].size();
+	if(n==0) return 0;
+	int mat[m+1][n+1];
+	for(int i=0;i<=m;++i){
+		for(int j=0;j<=n;++j)
+			mat[i][j] = 0;
+	}
+	if(obstacleGrid[0][0]==0) mat[0][1] = 1;
+	else return 0;
+	for(int i=1;i<=m;++i){
+		for(int j=1;j<=n;++j){
+			if(obstacleGrid[i-1][j-1]==1) mat[i][j];
+			else mat[i][j] = mat[i-1][j] + mat[i][j-1];
+		}
+	}
+	return mat[m][n];
+}
+int main(int argc,char*argv[]){
+	return 0;
 }
