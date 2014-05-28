@@ -2,7 +2,14 @@
 #include <string>
 #include <vector>
 using namespace std;
-
+/*
+ Given a string s, partition s such that every substring of the partition is a palindrome.
+ 
+ Return the minimum cuts needed for a palindrome partitioning of s.
+ 
+ For example, given s = "aab",
+ Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
+ */
 bool isPal(const string &s){
 	int l=0;
 	int r=s.size()-1;
@@ -15,7 +22,7 @@ bool isPal(const string &s){
 	}
 	return true;
 }
-int minCut(string s) {
+int minCutTLE(string s) {
 	int n=s.size();
 	if(n<=1) return 0;
 	cout << "before" << endl;
@@ -51,6 +58,31 @@ int minCut(string s) {
 	//cout << "res: " << res << endl;
 	return res;
 }
+
+int minCut(string s) {
+	int n = s.size();
+	if(n<=1) return 0;
+	bool pal[n][n];
+	for(int i=0;i<n;++i){
+		for(int j=0;j<n;++j){
+			pal[i][j] = false;
+		}
+	}
+	int cut[n+1];
+	for(int i=0;i<=n;++i){
+		cut[i] = n-i-1;
+	} 
+	for(int i=n-1;i>=0;--i){
+		for(int j=i;j<n;++j){
+			if(s[i]==s[j]&&(j-i<2||pal[i+1][j-1])){
+				pal[i][j] = true;
+				cut[i] = min(cut[i],cut[j+1]+1);
+			}
+		}
+	}
+	return cut[0];
+}
+
 int main(int argc,char*argv[]){
 	//string s = "aaaaaaabbaaa";
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
