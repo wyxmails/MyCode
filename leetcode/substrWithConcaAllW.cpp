@@ -1,3 +1,8 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+using namespace std;
 /*Substring with Concatenation of All Words
    You are given a string, S, and a list of words, L, 
    that are all of the same length. 
@@ -11,44 +16,44 @@ L: ["foo", "bar"]
  (order does not matter).
  */
 vector<int> findSubstring(string S, vector<string> &L) {
-	// Start typing your C/C++ solution below
-	// DO NOT write int main() function
-	int ary=3;
-	int len,num,tmp;
-	map<int,int> mapint;
-	vecint.clear();
-	for(int i=0;i<L.size();++i){
-		len = L[i].size()-1;
-		num = 0;
-		for(int j=0;j<=len;++j){
-			tmp = L[i][j]-'a';
-			num += tmp*pow(ary,len-j);
-		}
-		mapint[num] = 0;
-	}
-	num = 0;
-	for(int i=0;i<S.size()&&i<len;++i){
-		num += tmp*pow(ary,len-i);
-	}
-	map<int,int>::iterator it;
-	bool restart=false;
-	for(int i=0;i<S.size();++i){
-		restart = true;
-		for(it = mapint.begin();it!=mapint.end();++it){
-			if(num==(*it).first){
-				if((*it).second==1) break;
-				else{
-					(*it).second=1;
-					restart = false;
+	vector<int> res;
+	if(L.size()<=0) return res;
+	if(L.size()*L[0].size()>S.size()) return res;
+	map<string,int> mark;
+	map<string,int> appear;
+	for(int i=0;i<L.size();++i)
+		mark[L[i]]++;
+	int len = L[0].size();
+	int b1,e1;
+	int i=0;
+	while(i<=(S.size()-L.size()*len)){
+		bool find = true;
+		appear.clear();
+		for(b1=i,e1=i;e1<=i+(L.size()-1)*len;e1+=len){
+			string s = S.substr(e1,len);
+			if(mark.find(s)!=mark.end()){
+				appear[s]++;
+				if(appear[s]>mark[s]){
+					find = false;
 					break;
-				} 
+				}
+			}else{
+				find = false;
+				break;
 			}
 		}
-		if(restart){
-			for(it = mapint.begin();it!=mapint.end();++it)
-				(*it).second = 0;
-		}else{
-		
-		}
+		if(find)
+			res.push_back(b1);
+		i++;	
 	}
+	return res;
+}
+int main(int argc,char*argv[]){
+	string s1 = "barfoothefoobarman";
+	vector<string> t1;
+	t1.push_back("foo");
+	t1.push_back("bar");
+	vector<int> res = findSubstring(s1,t1);
+	for(int i=0;i<res.size();++i) cout << res[i] << endl;
+	return 0;
 }
