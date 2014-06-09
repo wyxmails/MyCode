@@ -61,3 +61,42 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
 	t->next = NULL;
 	return h;
 }
+ListNode *addTwoNumbers1(ListNode *l1, ListNode *l2) {
+        ListNode *t1 = l1;
+        ListNode *t2 = l2;
+        int carry = 0;
+        ListNode *tail;
+        while(t1!=NULL&&t2!=NULL){
+            t1->val += t2->val+carry;
+            carry = t1->val/10;
+            t1->val %= 10;
+            tail = t1;
+            t1 = t1->next;
+            t2 = t2->next;
+        }
+        while(t1!=NULL){
+            t1->val += carry;
+            carry = t1->val/10;
+            t1->val %= 10;
+            tail = t1;
+            t1 = t1->next;
+        }
+        tail->next = t2;
+        while(t2!=NULL){
+            t2->val += carry;
+            carry = t2->val/10;
+            t2->val %= 10;
+            tail = t2;
+            t2 = t2->next;
+        }
+        tail->next = l2;
+        while(carry){
+            l2->val = carry;
+            carry = l2->val/10;
+            l2->val %= 10;
+            tail = l2;
+            l2 = l2->next;
+        }
+        tail->next = NULL;
+        return l1;
+}
