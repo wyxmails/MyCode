@@ -23,3 +23,22 @@ int lengthOfLongestSubstring(string s) {
 	}
 	return MAX;
 }
+int lengthOfLongestSubstring1(string s) {
+        vector<int> mark(256,0);
+        int n = s.size();
+        if(n==0) return 0;
+        int Max = 1;
+        int start = 0;
+        for(int i=0;i<n;++i){
+            if(mark[s[i]]>0){
+                Max = max(i-start,Max);
+                while(mark[s[i]]>0&&start<=i){
+                    mark[s[start]]--;
+                    start++;
+                }
+            }
+            mark[s[i]]++;
+            
+        }
+        return max(Max,n-start);
+}
