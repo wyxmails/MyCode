@@ -34,3 +34,19 @@ bool isPalindrome(int x) {
 	}
 	return true;
 }
+    bool isPalindrome2(int x) {
+        if(x<0) return false;
+        int cnt = 0;
+        int tmp = x;
+        while(tmp){
+            tmp /= 10;
+            cnt++;
+        }
+        while(x&&cnt){
+            tmp = pow(10,cnt-1);
+            if(x/tmp!=x%10) return false;
+            x = x%tmp/10;
+            cnt -= 2;
+        }
+        return true;
+    }
