@@ -100,3 +100,41 @@ vector<string> letterCombinations(string digits) {
 	vecres.insert(vecres.begin(),vectmp3.begin(),vectmp3.end());
 	return vecres;
 }
+void myCom(vector<string>& res, string digits,string &str,unordered_map<int,vector<char> > dic){
+        int d = int(digits[0]-'0');
+        int n = str.size();
+        if(digits.size()==1){
+            for(int i=0;i<dic[d].size();++i){
+                str += dic[d][i];
+                res.push_back(str);
+                str.erase(n,1);
+            }
+            return;
+        }
+        string tmp = digits;
+        tmp.erase(0,1);
+        for(int i=0;i<dic[d].size();++i){
+            str += dic[d][i];
+            myCom(res,tmp,str,dic);
+            str.erase(n,1);
+        }
+}
+vector<string> letterCombinations2(string digits) {
+        unordered_map<int,vector<char> > dic;
+        dic[2].push_back('a'); dic[2].push_back('b'); dic[2].push_back('c');
+        dic[3].push_back('d'); dic[3].push_back('e'); dic[3].push_back('f');
+        dic[4].push_back('g'); dic[4].push_back('h'); dic[4].push_back('i');
+        dic[5].push_back('j'); dic[5].push_back('k'); dic[5].push_back('l');
+        dic[6].push_back('m'); dic[6].push_back('n'); dic[6].push_back('o');
+        dic[7].push_back('p'); dic[7].push_back('q'); dic[7].push_back('r'); dic[7].push_back('s');
+        dic[8].push_back('t'); dic[8].push_back('u'); dic[8].push_back('v');
+        dic[9].push_back('w'); dic[9].push_back('x'); dic[9].push_back('y'); dic[9].push_back('z');
+        vector<string> res;
+        if(digits.size()==0){
+            res.push_back(digits);
+            return res;
+        } 
+        string str = "";
+        myCom(res,digits,str,dic);
+    }
+    
