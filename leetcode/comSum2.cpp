@@ -52,6 +52,30 @@ vector<vector<int> > combinationSum2(vector<int> &num, int target) {
 	sort(num.begin(),num.end());
 	return myComSum(num,target,0);
 }
+void myCom(set<vector<int> > &setRes,vector<int>&cur,vector<int> &num, int target,int s){
+        if(target<0) return;
+        if(target==0){
+            if(cur.size()>0) setRes.insert(cur);
+            return;
+        }
+        int n = num.size();
+        for(int i=s;i<n;++i){
+            if(num[i]>target) return;
+            cur.push_back(num[i]);
+            myCom(setRes,cur,num,target-num[i],i+1);
+            cur.pop_back();
+        }
+}
+vector<vector<int> > combinationSum2_2(vector<int> &num, int target) {
+        sort(num.begin(),num.end());
+        set<vector<int> > setRes;
+        vector<int> cur;
+        myCom(setRes,cur,num,target,0);
+        set<vector<int> >::iterator it = setRes.begin();
+        vector<vector<int> > res;
+        for(;it!=setRes.end();++it) res.push_back(*it);
+        return res;
+}
 int main(int argc,char*argv[]){
 	vector<int> can;
 	can.push_back(2);
