@@ -55,6 +55,29 @@ vector<TreeNode *> generateTrees(int n) {
 	}
 	return res;
 }
+vector<TreeNode *> myGen2(int l,int r){
+        vector<TreeNode *> res,resL,resR;
+        if(l>r){
+            res.push_back(NULL);
+            return res;
+        }
+        for(int i=l;i<=r;++i){
+            resL = myGen(l,i-1);
+            resR = myGen(i+1,r);
+            for(int j=0;j<resL.size();++j){
+                for(int k=0;k<resR.size();k++){
+                    TreeNode*root = new TreeNode(i);
+                    root->left = resL[j];
+                    root->right = resR[k];
+                    res.push_back(root);
+                }
+            }
+        }
+        return res;
+}
+vector<TreeNode *> generateTrees2(int n) {
+        return myGen(1,n);
+}
 
 int main(int argc,char*argv[]){
 	return 0;
