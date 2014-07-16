@@ -62,7 +62,40 @@ string addBinary(string a, string b) {
 	if(carry) sres = '1' + sres;
 	return sres;
 }
-
+string addBinary2(string a, string b) {
+        int m = a.size();
+        if(m==0) return b;
+        int n = b.size();
+        if(n==0) return a;
+        int carr = 0;
+        string res = "";
+        int i=m-1;
+        int j=n-1;
+        while(i>=0&&j>=0){
+            int n1 = a[i]-'0';
+            int n2 = b[j]-'0';
+            if((n1+n2+carr)%2) res = '1'+res;
+            else res = '0'+res;
+            carr = (n1+n2+carr)/2;
+            i--;j--;
+        }
+        while(i>=0){
+            int n1 = a[i]-'0';
+            if((n1+carr)%2) res = '1'+res;
+            else res = '0'+res;
+            carr = (n1+carr)/2;
+            i--;
+        }
+        while(j>=0){
+            int n1 = b[j]-'0';
+            if((n1+carr)%2) res = '1'+res;
+            else res = '0'+res;
+            carr = (n1+carr)/2;
+            j--;
+        }
+        if(carr) res = '1'+res;
+        return res;
+}
 int main(){
 	string s1,s2;
 	cin>>s1>>s2;
