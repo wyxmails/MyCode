@@ -44,3 +44,19 @@ void nextPermutation(vector<int> &num) {
 		j--;
 	}
 }
+void nextPermutation2(vector<int> &num) {
+        int n = num.size();
+        if(n==1) return;
+        int i = n-1;
+        while(i>0&&num[i-1]>=num[i]) i--;
+        if(i==0) sort(num.begin(),num.end());
+        else{
+            i--;
+            int j=n-1;
+            while(j>i&&num[j]<=num[i]) j--;
+            int tmp = num[i];
+            num[i] = num[j];
+            num[j] = tmp;
+            sort(num.begin()+i+1,num.end());
+        }
+}
