@@ -35,3 +35,20 @@ bool isValid(string s) {
 	if(mystack.empty()) return true;
 	else return false;
 }
+bool isValid2(string s) {
+        int n = s.size();
+        if(n==0) return true;
+        stack<char> myStack;
+        for(int i=0;i<n;++i){
+            if(s[i]=='('||s[i]=='['||s[i]=='{'){
+                myStack.push(s[i]);
+            }else{
+                if(myStack.empty()) return false;
+                if(s[i]==')'&&myStack.top()!='(') return false;
+                if(s[i]==']'&&myStack.top()!='[') return false;
+                if(s[i]=='{'&&myStack.top()!='{') return false;
+                myStack.pop();
+            }
+        }
+        return myStack.empty();
+}
