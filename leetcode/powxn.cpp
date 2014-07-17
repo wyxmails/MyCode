@@ -26,7 +26,23 @@ double pow(double x, int n) {
 	}
 	return res;
 }
-
+double pow2(double x, int n) {
+        double mini = 0.00000001;
+        if(n==0) return 1;
+        if(fabs(x-1.0)<0.00000001) return x;
+        if(fabs(x+1.0)<0.00000001) return n%2?x:-x;
+        bool flag = false;
+        if(n<0){
+            n = -n;
+            flag = true;
+        }
+        double res = 1.0;
+        while(n>0&&fabs(res)>0.00000001){
+            res *= x;
+            n--;
+        } 
+        return flag?1.0/res:res;
+}
 int main(){
 	int n;
 	double x;
