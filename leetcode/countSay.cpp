@@ -35,3 +35,18 @@ string countAndSay(int n) {
 	}
 	return res;
 }
+string countAndSay2(int n) {
+        string res = "1";
+        for(int i=1;i<n;++i){
+            string tmp = "";
+            for(int j=0;j<res.size();++j){
+                int cnt = j;
+                while(j+1<res.size()&&res[j]==res[j+1]) j++;
+                cnt = j-cnt+1;
+                //tmp += char('0'+cnt) +res[j]; //wrong answer 2 return b, why?
+                tmp = tmp + char('0'+cnt) +res[j];
+            }
+            res = tmp;
+        }
+        return res;
+}
