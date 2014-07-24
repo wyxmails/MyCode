@@ -29,6 +29,19 @@ int numDistinct(string S, string T) {
 	}
 	return arr[m][n];
 }
+int numDistinct2(string S, string T) {
+        int m = T.size();
+        int n = S.size();
+        vector<vector<int> > mark(m+1,vector<int>(n+1,0));
+        for(int i=0;i<n;++i) mark[0][i] = 1;
+        for(int i=0;i<m;++i){
+            for(int j=0;j<n;++j){
+                if(T[i]==S[j]) mark[i+1][j+1] = mark[i][j]+mark[i+1][j];
+                else mark[i+1][j+1] = mark[i+1][j];
+            }
+        }
+        return mark[m][n];
+}
 int main(int argc,char*argv[]){
 	string s = "ccc";
 	string t = "c";
