@@ -67,6 +67,40 @@ vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
 		intervals.erase(intervals.begin()+s+1,intervals.begin()+e+1);
 	return intervals;
 }
+vector<Interval> insert2(vector<Interval> &intervals, Interval newInterval) {
+        int n = intervals.size();
+        if(n==0){
+            intervals.insert(intervals.begin(),newInterval);
+            return intervals;
+        }
+        int start=-1;
+        int end = -1;
+        for(int i=0;i<n;++i){
+            if(start==-1){
+                if(newInterval.start<intervals[i].start||(newInterval.start>=intervals[i].start&&newInterval.start<=intervals[i].end)) start = i;
+            }
+            if(end==-1){
+                if(newInterval.end>intervals[n-i-1].end||(newInterval.end<=intervals[n-i-1].end&&newInterval.end>=intervals[n-i-1].start)) end = n-i-1;
+            }
+            if(start!=-1&&end!=-1) break;
+        }
+        if(start==-1&&end==-1) return intervals;
+        if(start==-1) intervals.push_back(newInterval);
+        else if(end==-1) intervals.insert(intervals.begin(),newInterval);
+        else{
+            if(end<start){
+                intervals.insert(intervals.begin()+start,newInterval);
+            }else if(start==end){
+                intervals[start].start = min(newInterval.start,intervals[start].start);
+                intervals[end].end = max(newInterval.end,intervals[end].end);
+            }else{
+                intervals[start].start = min(newInterval.start,intervals[start].start);
+                intervals[start].end = max(newInterval.end,intervals[end].end);
+                intervals.erase(intervals.begin()+start+1,intervals.begin()+end+1);
+            }
+        }
+        return intervals;
+}
 int main(int argc,char*argv[]){
 	return 0;
 }
