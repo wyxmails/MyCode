@@ -40,7 +40,25 @@ ListNode *partition(ListNode *head, int x) {
 	s_last->next = big->next;
 	return small->next;
 }
-
+ListNode *partition2(ListNode *head, int x) {
+        ListNode *sh,*st,*bh,*bt;
+        sh=st=bh=bt=NULL;
+        while(head!=NULL){
+            if(head->val<x){
+                if(sh==NULL) sh= head;
+                else st->next = head;
+                st = head;
+            }else{
+                if(bh==NULL) bh = head;
+                else bt->next = head;
+                bt = head;
+            }
+            head = head->next;
+        }
+        if(st!=NULL) st->next = bh;
+        if(bt!=NULL) bt->next = NULL;
+        return sh==NULL?bh:sh;
+}
 int main(){
 	ListNode *head = new ListNode(1);
 	ListNode *nnode = new ListNode(1);
