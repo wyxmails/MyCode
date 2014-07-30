@@ -25,3 +25,15 @@ int maxArea(vector<int> &height) {
 	}
 	return water;
 }
+
+int maxArea2(vector<int> &height) {
+        int n = height.size();
+        if(n==0) return 0;
+        int amount = 0; 
+        for(int i=0,j=n-1;j>i;){
+            int tmp = min(height[i],height[j])*(j-i);
+            amount = max(tmp,amount);
+            height[i]>height[j]?j--:i++;
+        }
+        return amount;
+}
