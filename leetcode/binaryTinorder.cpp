@@ -31,6 +31,15 @@ vector<int> inorderTraversal(TreeNode *root) {
 	}
 	return vec;
 }
+vector<int> inorderTraversal2(TreeNode *root) {
+        vector<int> resL,resR;
+        if(root==NULL) return resL;
+        resL = inorderTraversal(root->left);
+        resR = inorderTraversal(root->right);
+        resL.push_back(root->val);
+        resL.insert(resL.end(),resR.begin(),resR.end());
+        return resL;
+}
 int main(){
 	TreeNode *root = new TreeNode(2);
 	TreeNode *nnode = new TreeNode(1);
