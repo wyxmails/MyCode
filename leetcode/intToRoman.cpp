@@ -55,3 +55,41 @@ string intToRoman(int num) {
 	}
 	return str;
 }
+
+string intToRoman2(int num) {
+        unordered_map<int,char> dic;
+        dic[1] = 'I'; dic[5] = 'V'; dic[10] = 'X'; dic[50] = 'L';
+        dic[100] = 'C'; dic[500] = 'D'; dic[1000] = 'M';
+        int arr[7] = {1000,500,100,50,10,5,1};
+        string res = "";
+        for(int i=0;i<7;i+=2){
+            int index = num/arr[i];
+            if(index==0) continue;
+            num -= index*arr[i];
+            if(index==5) res += dic[arr[i-1]];
+            else if(index>5){
+                if(index==9){
+                    res += dic[arr[i]];
+                    res += dic[arr[i-2]];
+                }else{
+                    res += dic[arr[i-1]];
+                    index %= 5;
+                    while(index>0){
+                        res += dic[arr[i]];
+                        index--;
+                    }
+                }
+            }else{
+                if(index==4){
+                    res += dic[arr[i]];
+                    res += dic[arr[i-1]];
+                }else{
+                    while(index>0){
+                        res += dic[arr[i]];
+                        index--;
+                    }
+                }
+            }
+        }
+        return res;
+}
