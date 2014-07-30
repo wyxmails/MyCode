@@ -38,6 +38,30 @@ int romanToInt(string s) {
 	return res;
 }
 
+int romanToInt2(string s) {
+        int n = s.size();
+        if(n==0) return 0;
+        unordered_map<char,int> dic;
+        dic['I'] = 1; dic['V'] = 5; dic['X'] = 10; dic['L'] = 50;
+        dic['C'] = 100; dic['D'] = 500; dic['M'] = 1000;
+        int res = 0;
+        for(int i=0;i<n;++i){
+            if(i+1<n){
+                if(dic[s[i+1]]>dic[s[i]]){
+                    res += dic[s[i+1]]-dic[s[i]];
+                    i++;
+                }else{
+                    int cnt=1;
+                    while(i+1<n&&s[i+1]==s[i]){
+                        cnt++; i++;
+                    } 
+                    res += cnt*dic[s[i]];
+                }
+            }else res += dic[s[i]];
+        }
+        return res;
+}
+
 int main(){
 	string s;
 	s = "I";
