@@ -53,3 +53,24 @@ vector<vector<int> > levelOrder(TreeNode *root) {
 	}
 	return vecres;
 }
+vector<vector<int> > levelOrder2(TreeNode *root) {
+        vector<vector<int> > res;
+        if(root==NULL) return res;
+        vector<TreeNode *> arr[2];
+        int pre=1;
+        int cur = 0;
+        arr[cur].push_back(root);
+        while(!arr[cur].empty()){
+            cur=!cur; pre=!pre;
+            vector<int> vec;
+            for(int i=0;i<arr[pre].size();++i){
+                vec.push_back(arr[pre][i]->val);
+                if(arr[pre][i]->left!=NULL) arr[cur].push_back(arr[pre][i]->left);
+                if(arr[pre][i]->right!=NULL) arr[cur].push_back(arr[pre][i]->right);
+            }
+            res.push_back(vec);
+            vec.clear();
+            arr[pre].clear();
+        }
+        return res;
+}
