@@ -61,3 +61,33 @@ vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
 	}
 	return vecres;
 }
+
+vector<vector<int> > zigzagLevelOrder2(TreeNode *root) {
+        vector<vector<int> > res;
+        if(root==NULL) return res;
+        int cur=0;
+        int pre=1;
+        vector<TreeNode *> arr[2];
+        arr[cur].push_back(root);
+        bool seq = true;
+        while(!arr[cur].empty()){
+            pre=!pre;cur=!cur;
+            vector<int> vec;
+            if(seq){
+                for(int i=0;i<arr[pre].size();++i) 
+                    vec.push_back(arr[pre][i]->val);
+            }else{
+                for(int i=arr[pre].size()-1;i>=0;--i) 
+                    vec.push_back(arr[pre][i]->val);
+            }
+            res.push_back(vec);
+            vec.clear();
+            seq=!seq;
+            for(int i=0;i<arr[pre].size();++i){
+                if(arr[pre][i]->left!=NULL) arr[cur].push_back(arr[pre][i]->left);
+                if(arr[pre][i]->right!=NULL) arr[cur].push_back(arr[pre][i]->right);
+            }
+            arr[pre].clear();
+        }
+        return res;
+}
