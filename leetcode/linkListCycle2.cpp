@@ -1,3 +1,10 @@
+/*
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+Follow up:
+Can you solve it without using extra space?
+*/
+
 #include <iostream>
 using namespace std;
 
@@ -28,6 +35,25 @@ ListNode *detectCycle(ListNode *head) {
 		return r1;
 	}
 }
+
+ListNode *detectCycle2(ListNode *head) {
+        ListNode *l1,*l2;
+        l1=l2=head;
+        while(l2!=NULL){
+            l2 = l2->next;
+            if(l2==NULL) return NULL;
+            l1=l1->next;
+            l2=l2->next;
+            if(l1==l2) break;
+        }
+        if(l1==NULL||l2==NULL) return NULL;
+        l1=head;
+        while(l1!=l2){
+            l1 = l1->next;
+            l2 = l2->next;
+        }
+        return l1;
+    }
 
 int main(int argc,char*argv[]){
 	ListNode *head = new ListNode(1);

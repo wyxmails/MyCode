@@ -165,6 +165,36 @@ return h;
 
 }
 
+ListNode *mergeTwoLists3(ListNode *l1, ListNode *l2) {
+        if(l1==NULL&&l2==NULL) return NULL;
+        ListNode *head,*tail;
+        head=tail=NULL;
+        while(l1!=NULL&&l2!=NULL){
+            if(l1->val<=l2->val){
+                if(tail==NULL) head = l1;
+                else tail->next = l1;
+                tail = l1;
+                l1 = l1->next;
+            }else{
+                if(tail==NULL) head = l2;
+                else tail->next = l2;
+                tail = l2;
+                l2 = l2->next;
+            }
+        }
+        if(l1!=NULL){
+            if(tail==NULL) head = l1;
+            else tail->next = l1;
+            tail = l1;
+        }
+        if(l2!=NULL){
+            if(tail==NULL) head = l2;
+            else tail->next = l2;
+            tail = l2;
+        }
+        return head;
+}
+
 int main(){
 	ListNode *h1,*h2,*t1,*t2,*ln;
 	h1=h2=t1=t2=ln=NULL;

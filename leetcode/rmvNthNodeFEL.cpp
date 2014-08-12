@@ -26,3 +26,20 @@ ListNode *removeNthFromEnd(ListNode *head, int n) {
 	else tmp1->next = tmp2->next;
 	return head;
 }
+ListNode *removeNthFromEnd2(ListNode *head, int n) {
+        if(head==NULL) return NULL;
+        ListNode *tail = head;
+        ListNode *pre = head;
+        while(tail!=NULL&&n>0){
+            tail = tail->next;
+            n--;
+        }
+        if(n!=0) return head;
+        if(tail==NULL) return head->next;
+        while(tail->next!=NULL){
+            pre = pre->next;
+            tail = tail->next;
+        }
+        pre->next = pre->next->next;
+        return head;
+}
