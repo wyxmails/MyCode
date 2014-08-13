@@ -1,3 +1,8 @@
+/*
+Sort List Total Accepted: 17611 Total Submissions: 86269 My Submissions
+Sort a linked list in O(n log n) time using constant space complexity.
+*/
+
 #include <iostream>
 using namespace std;
 
@@ -70,6 +75,55 @@ ListNode *sortList(ListNode *head) {
 		}
 	}
 	return head;
+}
+
+ListNode *sortList2(ListNode *head) {
+        if(head==NULL||head->next==NULL) return head;
+        int n = 0;
+        ListNode *h=head;
+        while(h!=NULL){
+            h = h->next;
+            n++;
+        }
+        return mySort(head,n);
+    }
+ListNode *mySort(ListNode *head,int n){
+        if(n<=1) return head;
+        int m = n/2;
+        ListNode *h = head;
+        for(int i=1;i<m;++i){
+            h = h->next;
+        }
+        ListNode *t = h;
+        h = h->next;
+        t->next = NULL;
+        head = mySort(head,m);
+        h = mySort(h,n-m);
+        //merge
+        ListNode *resH,*resT;
+        resH=resT=NULL;
+        while(head!=NULL&&h!=NULL){
+            if(head->val<=h->val){
+                if(resH==NULL) resH = head;
+                else resT->next = head;
+                resT = head;
+                head = head->next;
+            }else{
+                if(resH==NULL) resH = h;
+                else resT->next = h;
+                resT = h;
+                h = h->next;
+            }
+        }
+        if(head!=NULL){
+            if(resH==NULL) resH = head;
+            else resT->next = head;
+        }
+        if(h!=NULL){
+            if(resH==NULL) resH = h;
+            else resT->next = h;
+        }
+        return resH;
 }
 
 int main(int argc,char*argv[]){
