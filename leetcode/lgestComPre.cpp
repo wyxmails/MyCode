@@ -24,3 +24,19 @@ string longestCommonPrefix(vector<string> &strs) {
 	}
 	return res;
 }
+
+string longestCommonPrefix2(vector<string> &strs) {
+        string res = "";
+        int m =strs.size();
+        if(m<=0) return res;
+        int n = strs[0].size();
+        if(n<=0) return res;
+        for(int i=0;i<n;++i){
+            char c = strs[0][i];
+            for(int j=0;j<m;++j){
+                if(strs[j][i]!=c) return res;
+            }
+            res += c;
+        }
+        return res;
+}
