@@ -1,3 +1,7 @@
+/*
+Sort a linked list using insertion sort.
+*/
+
 #include <iostream>
 using namespace std;
 struct ListNode {
@@ -40,6 +44,34 @@ ListNode *insertionSortList(ListNode *head) {
 		}
 	}
 	return head;
+}
+
+ListNode *insertionSortList(ListNode *head) {
+        ListNode *h,*run;
+        h=NULL; run = head;
+        while(run!=NULL){
+            ListNode *tmp1 = run->next;
+            if(h==NULL){
+                h = run;
+                h->next = NULL;
+            } 
+            else if(h->val>run->val){
+                run->next = h;
+                h = run;
+            }else{
+                ListNode *tmp2 = h;
+                while(tmp2->next!=NULL&&run->val>=tmp2->next->val) tmp2 = tmp2->next;
+                if(tmp2->next==NULL){
+                    tmp2->next = run;
+                    run->next = NULL;
+                }else{
+                    run->next = tmp2->next;
+                    tmp2->next = run;
+                }
+            }
+            run = tmp1;
+        }
+        return h;
 }
 
 int main(int argc,char*argv[]){
