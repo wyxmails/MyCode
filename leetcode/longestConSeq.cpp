@@ -37,6 +37,35 @@ int longestConsecutive(vector<int> &num) {
 	if(i-s>Max) return i-s;
 	return Max;
 }
+
+int longestConsecutive2(vector<int> &num) {
+        unordered_map<int,vector<int> > mark;
+        int n = num.size();
+        for(int i=0;i<n;++i){
+            vector<int> tmp;
+            tmp.push_back(num[i]);
+            tmp.push_back(num[i]);
+            mark[num[i]] = tmp;
+        }
+        unordered_map<int,vector<int> >::iterator it;
+        for(it=mark.begin();it!=mark.end();++it){
+            while(mark.find(it->second[0]-1)!=mark.end()){
+                mark.erase(it->second[0]-1);
+                it->second[0]--;
+            }
+            while(mark.find(it->second[1]+1)!=mark.end()){
+                mark.erase(it->second[1]+1);
+                it->second[1]++;
+            }
+        }
+        int res = 1;
+        for(it=mark.begin();it!=mark.end();++it){
+            int tmp = it->second[1]-it->second[0];
+            if(tmp+1>res) res = tmp+1;
+        }
+        return res;
+}
+
 int main(int argc,char*argv[]){
 	return 0;
 }
