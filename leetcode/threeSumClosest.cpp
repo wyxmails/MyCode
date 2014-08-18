@@ -37,3 +37,23 @@ int threeSumClosest(vector<int> &num, int target) {
 	}
 	return sum;
 }
+
+int threeSumClosest2(vector<int> &num, int target) {
+        int n = num.size();
+        int sum = num[0]+num[1]+num[2];
+        sort(num.begin(),num.end());
+        for(int i=0;i<n-2;++i){
+            for(int j=i+1,k=n-1;j<k;){
+                int tmp = num[i]+num[j]+num[k];
+                if(tmp==target) return target;
+                else if(tmp<target){
+                    if(abs(tmp-target)<abs(sum-target)) sum = tmp;
+                    j++;
+                }else{
+                    if(abs(tmp-target)<abs(sum-target)) sum = tmp;
+                    k--;
+                }
+            }
+        }
+        return sum;
+}
