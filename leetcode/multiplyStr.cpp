@@ -48,41 +48,62 @@ string multiply(string num1, string num2) {
 	return str;
 }
 
-    string multiply1(string num1, string num2) {
-		        // Note: The Solution object is instantiated only once and is reused by each test case.
-		        string res;
-				        res.assign(num1.size()+num2.size()+1,'0');
-						    string n1 = num1;
-							    string n2 = num2;
-								    reverse(n1.begin(),n1.end());
-									    reverse(n2.begin(),n2.end());
-										    int t1,t2,carr=0;
-											    for(int i=0;i<n1.size();++i){
-													        for(int j=0;j<n2.size();++j){
-																            t1 = int(n1[i]-'0');
-																			            t2 = int(n2[i]-'0');
-																						            t1 *= t2;
-																									            t2 = int(res[i+j]-'0');
-																												            t1 += (t2+carr);
-																															            if(t1>9){
-																																			                carr = t1/10;
-																																							                res[i+j] = char(t1%10+'0');
-																																											            }else{
-																																															                carr = 0;
-																																																			                res[i+j] = char(t1+'0');
-																																																							            }
-																																		        }
-															    }
-												    reverse(res.begin(),res.end());
-													    int i=0;
-														    while(res[i]=='0'){
-																        res.erase(i,1);
-																		        if(res.size()==0) break;
-																				    }
-															    if(res.size()<=0) res = "0";
-																    return res;
+string multiply1(string num1, string num2) {
+	// Note: The Solution object is instantiated only once and is reused by each test case.
+	string res;
+	res.assign(num1.size()+num2.size()+1,'0');
+	string n1 = num1;
+	string n2 = num2;
+	reverse(n1.begin(),n1.end());
+	reverse(n2.begin(),n2.end());
+	int t1,t2,carr=0;
+	for(int i=0;i<n1.size();++i){
+		for(int j=0;j<n2.size();++j){
+			t1 = int(n1[i]-'0');
+			t2 = int(n2[i]-'0');
+			t1 *= t2;
+			t2 = int(res[i+j]-'0');
+			t1 += (t2+carr);
+			if(t1>9){
+				carr = t1/10;
+				res[i+j] = char(t1%10+'0');
+			}else{
+				carr = 0;
+				res[i+j] = char(t1+'0');
+			}
+		}
+	}
+	reverse(res.begin(),res.end());
+	int i=0;
+	while(res[i]=='0'){
+		res.erase(i,1);
+		if(res.size()==0) break;
+	}
+	if(res.size()<=0) res = "0";
+		return res;
+}
 
-																	    }
+string multiply2(string num1, string num2) {
+        int n1 = num1.size();
+        int n2 = num2.size();
+        string res(n1+n2,'0');
+        int r,v1,v2,carr;
+        for(int i=n1-1;i>=0;--i){
+            for(int j=n2-1;j>=0;--j){
+                v1 = num1[i]-'0';
+                v2 = num2[j]-'0';
+                carr = res[i+j+1]-'0';
+                r = v1*v2+carr;
+                res[i+j+1] = char('0'+r%10);
+                res[i+j] += r/10;
+            }
+        }
+        int i=0;
+        while(res[i]=='0') i++;
+        res = res.substr(i);
+        if(res.size()==0) res = "0";
+        return res;
+}
 
 int main(){
 	string n1 = "1";
