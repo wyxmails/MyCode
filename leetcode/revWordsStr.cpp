@@ -42,6 +42,21 @@ void reverseWords(string &s) {
 	myReverse(s,l,n-1);
 	myReverse(s,0,n-1);
 }
+
+void reverseWords2(string &s) {
+        string rs;
+        for(int i = s.size()-1;i>=0;){
+            while(i>=0&&s[i]==' ') i--;
+            if(i<0) break;
+            if(!rs.empty()) rs += ' ';
+            string t;
+            while(i>=0&&s[i]!=' ') t += s[i--];
+            reverse(t.begin(),t.end());
+            rs.append(t);
+        }
+        s = rs;
+}
+
 int main(int argc,char*argv[]){
 	return 0;
 }
