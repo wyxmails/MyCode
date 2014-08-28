@@ -41,6 +41,25 @@ vector<int> spiralOrder(vector<vector<int> > &matrix) {
 	int n = matrix[0].size();
 	return mySpi(matrix,0,m,n);
 }
+
+vector<int> spiralOrder2(vector<vector<int> > &matrix) {
+        vector<int> res;
+        int m = matrix.size();
+        if(m==0) return res;
+        int n = matrix[0].size();
+        if(n==0) return res;
+        int r = min(m+1,n+1)/2;
+        for(int s=0;s<r;++s){
+            for(int j=s;j<n-s;++j) res.push_back(matrix[s][j]);
+            for(int i=s+1;i<m-s;++i) res.push_back(matrix[i][n-s-1]);
+            if(m-s-1!=s)
+                for(int j=n-s-2;j>=s;--j) res.push_back(matrix[m-s-1][j]);
+            if(n-s-1!=s)
+                for(int i=m-s-2;i>s;--i) res.push_back(matrix[i][s]);
+        }
+        return res;
+}
+
 int main(int argc,char*argv[]){
 	vector<int> vec;
 	vec.push_back(2);
