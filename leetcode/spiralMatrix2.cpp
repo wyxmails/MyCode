@@ -32,6 +32,23 @@ vector<vector<int> > generateMatrix(int n) {
 	myGen(res,1,0,n);
 	return res;
 }
+
+vector<vector<int> > generateMatrix2(int n) {
+        vector<vector<int> > res(n,vector<int>(n,0));
+        if(n==0) return res;
+        int r = (n+1)/2;
+        int val=1;
+        for(int s=0;s<r;++s){
+            for(int j=s;j<n-s;++j) res[s][j] = val++;
+            for(int i=s+1;i<n-s;++i) res[i][n-s-1] = val++;
+            if(n-s-1!=s){
+                for(int j=n-s-2;j>=s;--j) res[n-s-1][j] = val++;
+                for(int i=n-s-2;i>s;--i) res[i][s] = val++;
+            }
+        }
+        return res;
+}
+
 int main(int argc,char *argv[]){
 	return 0;
 }
