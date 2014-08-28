@@ -63,6 +63,38 @@ vector<vector<string> > partition(string s) {
 	return res;
 }
 
+class Solution {
+public:
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>> res;
+        vector<string> mid;
+        int n = s.size();
+        if(n==0) return res;
+        dfs(s,0,mid,res);
+        return res;
+    }
+    void dfs(string s,int start,vector<string> &mid,vector<vector<string>> &res){
+        if(start==s.size()){
+            res.push_back(mid);
+            return;
+        }
+        for(int i=start;i<s.size();++i){
+            if(isPal(s,start,i)){
+                mid.push_back(s.substr(start,i-start+1));
+                dfs(s,i+1,mid,res);
+                mid.pop_back();
+            }
+        }
+    }
+    bool isPal(string s,int l,int r){
+        while(l<r){
+            if(s[l]!=s[r]) return false;
+            l++; r--;
+        }
+        return true;
+    }
+};
+
 int main(int argc,char*argv[]){
 	//string s = "ababbbabbaba";
 	string s = "aba";
