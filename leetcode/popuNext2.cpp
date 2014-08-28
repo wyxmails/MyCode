@@ -123,6 +123,34 @@ void connectIte(TreeLinkNode *root) {
 		c1 = c2 = d1;
 	}
 }
+
+void connect2(TreeLinkNode *root) {
+        TreeLinkNode *next,*p,*cur=root;
+        next=p=NULL;
+        while(cur!=NULL){
+            TreeLinkNode *sub = getSub(cur);
+            if(sub!=NULL){
+                if(next==NULL){
+                    next = sub;
+                    p = sub;
+                }else p->next = sub;
+                while(p->next!=NULL) p = p->next;
+            }
+            cur = cur->next;
+            if(cur==NULL){
+                cur = next;
+                next = NULL;
+            }
+        }
+}
+TreeLinkNode *getSub(TreeLinkNode *root){
+        if(root->left!=NULL&&root->right!=NULL)
+            root->left->next = root->right;
+        if(root->left!=NULL) return root->left;
+        if(root->right!=NULL) return root->right;
+        return NULL;
+}
+
 int main(int argc,char *argv[]){
 	return 0;
 }
