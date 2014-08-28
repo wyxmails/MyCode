@@ -101,6 +101,32 @@ vector<Interval> insert2(vector<Interval> &intervals, Interval newInterval) {
         }
         return intervals;
 }
+
+vector<Interval> insert3(vector<Interval> &intervals, Interval newInterval) {
+        int n = intervals.size();
+        int l,r;
+        l=r=-1;
+        for(int i=0;i<n&&(l==-1||r==-1);++i){
+            if(l==-1&&(intervals[i].start>newInterval.start||
+                (intervals[i].start<=newInterval.start&&
+                intervals[i].end>=newInterval.start))) 
+                l = i;
+            if(r==-1&&(intervals[n-i-1].end<newInterval.end||
+                (intervals[n-i-1].end>=newInterval.end&&
+                intervals[n-i-1].start<=newInterval.end))) 
+                r=n-i-1;
+        }
+        if(l==-1)
+            intervals.push_back(newInterval);
+        else if(l>r){
+            intervals.insert(intervals.begin()+l,newInterval);
+        }else{
+            intervals[l].start = min(intervals[l].start,newInterval.start);
+            intervals[l].end = max(intervals[r].end,newInterval.end);
+            if(l<r) intervals.erase(intervals.begin()+l+1,intervals.begin()+r+1);
+        }
+        return intervals;
+}
 int main(int argc,char*argv[]){
 	return 0;
 }
