@@ -7,8 +7,32 @@ dict = ["leet", "code"].
 
 Return true because "leetcode" can be segmented as "leet code".
 */
-
 class Solution {
+public:
+    bool wordBreak(string s, unordered_set<string> &dict) {
+        // IMPORTANT: Please reset any member data you declared, as
+        // the same Solution instance will be reused for each test case.
+        if(dict.find(s)!=dict.end()) return true;
+        
+        set<char> set1,set2;
+        for(int i=0;i<s.size();++i) set1.insert(s[i]);
+        for(unordered_set<string>::iterator it=dict.begin();it!=dict.end();++it){
+            for(int j=0;j<(*it).size();++j) set2.insert((*it)[j]);
+        }
+        if(set2.size()<set1.size()) return false;
+        
+        for(int i=1;i<s.size();++i){
+            string s1 = s.substr(0,i);
+            if(dict.find(s1)!=dict.end()){
+                string s2 = s.substr(i,s.size()-i);
+                if(wordBreak(s2,dict)) return true;
+            }
+        }
+        return false;
+    }
+};
+
+class Solution2 {
 public:
     bool wordBreak(string s, unordered_set<string> &dict) {
         string s1 = "#"+s;
