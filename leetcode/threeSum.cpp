@@ -42,3 +42,28 @@ vector<vector<int> > threeSum(vector<int> &num) {
 	}
 	return vecres;
 }
+
+vector<vector<int> > threeSum(vector<int> &num) {
+        vector<vector<int> > res;
+        int n = num.size();
+        if(n==0) return res;
+        sort(num.begin(),num.end());
+        for(int i=0;i<n-2;++i){
+            if(i>0&&num[i]==num[i-1]) continue;
+            for(int j=i+1,k=n-1;j<k;){
+                int tmp = num[i]+num[j]+num[k];
+                if(tmp==0){
+                    vector<int> vec;
+                    vec.push_back(num[i]);
+                    vec.push_back(num[j]);
+                    vec.push_back(num[k]);
+                    res.push_back(vec);
+                    j++;k--;
+                    while(j<k&&num[j]==num[j-1]) j++;
+                    while(k>j&&num[k]==num[k+1]) k--;
+                }else if(tmp>0) k--;
+                else j++;
+            }
+        }
+        return res;
+}
