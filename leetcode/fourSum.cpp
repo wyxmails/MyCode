@@ -47,3 +47,30 @@ vector<vector<int> > fourSum(vector<int> &num, int target) {
 	}
 	return vecres;
 }
+
+vector<vector<int> > fourSum2(vector<int> &num, int target) {
+        vector<vector<int> > res;
+        int n = num.size();
+        if(n==0) return res;
+        sort(num.begin(),num.end());
+        for(int i=0;i<n-3;++i){
+            if(i>0&&num[i]==num[i-1]) continue;
+            for(int j=i+1;j<n-2;++j){
+                if(j>i+1&&num[j]==num[j-1]) continue;
+                for(int k=j+1,m=n-1;k<m;){
+                    int tmp = num[i]+num[j]+num[k]+num[m];
+                    if(tmp==target){
+                        vector<int> vec;
+                        vec.push_back(num[i]); vec.push_back(num[j]);
+                        vec.push_back(num[k]); vec.push_back(num[m]);
+                        res.push_back(vec);
+                        k++;m--;
+                        while(k<m&&num[k]==num[k-1]) k++;
+                        while(m>k&&num[m]==num[m+1]) m--;
+                    }else if(tmp>target) m--;
+                    else k++;
+                }
+            }
+        }
+        return res;
+}
