@@ -60,6 +60,39 @@ bool exist(vector<vector<char> > &board, string word) {
 	}
 	return false;
 }
+bool myEx(vector<vector<char> > &board,int i,int j,string word,int k){
+        if(k>=word.size()) return true;
+        if(i<0||i>=board.size()||j<0||j>=board[0].size()) 
+            return false;
+        if(board[i][j]==word[k]){
+            char c = board[i][j];
+            board[i][j] = ' ';
+            if(myEx(board,i+1,j,word,k+1))
+                return true;
+            if(myEx(board,i-1,j,word,k+1))
+                return true;
+            if(myEx(board,i,j+1,word,k+1))
+                return true;
+            if(myEx(board,i,j-1,word,k+1))
+                return true;
+            board[i][j] = c;
+        }
+        return false;
+}
+bool exist2(vector<vector<char> > &board, string word) {
+        if(word.size()==0) return true;
+        int m = board.size();
+        if(m==0) return false;
+        int n = board[0].size();
+        if(n==0) return false;
+        for(int i=0;i<m;++i){
+            for(int j=0;j<n;++j){
+                if(myEx(board,i,j,word,0))
+                    return true;
+            }
+        }
+        return false;
+}
 int main(int argc,char*argv[]){
 	return 0;
 }
