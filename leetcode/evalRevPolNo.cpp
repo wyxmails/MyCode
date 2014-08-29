@@ -44,6 +44,35 @@ int evalRPN(vector<string> &tokens) {
 	return vec.back();
 }
 
+int evalRPN2(vector<string> &tokens) {
+        stack<int> myS;
+        int n = tokens.size();
+        if(n==0) return 0;
+        int v1,v2;
+        for(int i=0;i<n;++i){
+            if(tokens[i].size()>1||(tokens[i][0]-'0'>=0&&tokens[i][0]-'0'<10)){
+                myS.push(atoi(tokens[i].c_str()));
+            }else{
+                if(myS.size()<2) return 0;
+                v1 = myS.top();
+                myS.pop();
+                v2 = myS.top();
+                myS.pop();
+                if(tokens[i]=="+")
+                    myS.push(v1+v2);
+                else if(tokens[i]=="-")
+                    myS.push(v2-v1);
+                else if(tokens[i]=="*")
+                    myS.push(v1*v2);
+                else if(tokens[i]=="/"){
+                    if(v1==0) myS.push(0);
+                    else myS.push(v2/v1);
+                }
+            }
+        }
+        return myS.top();
+}
+
 int main(int argc,char*argv[]){
 	return 0;
 }
