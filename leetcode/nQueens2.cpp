@@ -37,6 +37,37 @@ int totalNQueens(int n) {
 	return cnt;
 }
 
+class Solution {
+public:
+    bool legal(int n,int r,int c,vector<int>&mark){
+        for(int i=0;i<n;++i){
+            if(mark[i]==-1) continue;
+            if(mark[i]==c) return false;
+            if(abs(mark[i]-c)==abs(i-r)) return false;
+        }
+        return true;
+    }
+    void mySol(int r,int n,vector<int>&mark,int &res){
+        if(r==n){
+            res++;
+            return;
+        }
+        for(int i=0;i<n;++i){
+            if(legal(n,r,i,mark)){
+                mark[r] = i;
+                mySol(r+1,n,mark,res);
+                mark[r] = -1;
+            }
+        }
+    }
+    int totalNQueens(int n) {
+        int res = 0;
+        vector<int> mark(n,-1);
+        mySol(0,n,mark,res);
+        return res;
+    }
+};
+
 int main(int argc,char*argv[]){
 	int n;
 	cin>>n;
