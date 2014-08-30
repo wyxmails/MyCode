@@ -30,3 +30,25 @@ vector<vector<int> > permute(vector<int> &num) {
 	}
 	return res;
 }
+
+
+vector<vector<int> > permute2(vector<int> &num) {
+        vector<vector<int> > res;
+        vector<int> mid;
+        myPer(num,mid,res);
+        return res;
+}
+void myPer(vector<int> &num,vector<int> &mid,vector<vector<int> >&res){
+        int n = num.size();
+        if(n==0){
+            res.push_back(mid);
+            return;
+        }
+        for(int i=0;i<n;++i){
+            vector<int> tmp = num;
+            mid.push_back(num[i]);
+            tmp.erase(tmp.begin()+i);
+            myPer(tmp,mid,res);
+            mid.pop_back();
+        }
+}
