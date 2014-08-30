@@ -1,3 +1,24 @@
+/*
+Given an integer n, return all distinct solutions to the n-queens puzzle.
+
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space respectively.
+
+For example,
+There exist two distinct solutions to the 4-queens puzzle:
+
+[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -51,6 +72,41 @@ vector<vector<string> > solveNQueens(int n) {
 	}
 	return res;
 }
+
+class Solution {
+public:
+    bool legal(int n,int r,int c,const vector<int> &mark){
+        for(int i=0;i<n;++i){
+            if(mark[i]==-1) continue;
+            if(mark[i]==c) return false;
+            if(abs(mark[i]-c)==abs(i-r)) return false;
+        }
+        return true;
+    }
+    vector<vector<string> > solveNQueens(int n) {
+        vector<vector<string> > res;
+        vector<int> mark(n,-1);
+        mySol(0,n,mark,res);
+        return res;
+    }
+    void mySol(int r,int n,vector<int>&mark,vector<vector<string> >&res){
+        if(r==n){
+            vector<string> mid(n,string(n,'.'));
+            for(int i=0;i<n;++i){
+                mid[i][mark[i]] = 'Q';
+            }
+            res.push_back(mid);
+        }
+        for(int i=0;i<n;++i){
+            if(legal(n,r,i,mark)){
+                mark[r] = i;
+                mySol(r+1,n,mark,res);
+                mark[r] = -1;
+            }
+        }
+    }
+};
+
 int main(int argc,char*argv[]){
 	int n;
 	cin>>n;
