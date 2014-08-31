@@ -36,6 +36,25 @@ int sqrt(int x) {
 		else return num;
 	}
 }
+
+class Solution {
+public:
+    int sqrt(int x) {
+        const float EPS = 0.000000001;
+        if(x==0) return x;
+        double dividend = x;
+        double val = x;
+        double last;
+        do{
+            last = val;
+            val = (val+dividend/val)/2;
+        }while(abs(val-last)>EPS);
+        int result = val;
+        if(result*result>x) result--;
+        return result;
+    }
+};
+
 int main(){
 	int x;
 	cin>>x;
