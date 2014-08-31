@@ -36,6 +36,17 @@ int removeElement2(int A[], int n, int elem) {
 	}
 	return len;
 }
+
+int removeElement3(int A[], int n, int elem) {
+        for(int i=0;i<n;++i){
+            if(A[i]==elem){
+                A[i] = A[n-1];
+                i--; n--;
+            }
+        }
+        return n;
+}
+    
 int main(){
 	srand(time(0));
 	int n,tmp;
