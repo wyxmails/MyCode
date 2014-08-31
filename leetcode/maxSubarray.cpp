@@ -24,3 +24,33 @@ public:
         return M;
     }
 };
+
+/*Divide & Conquer*/
+class SolutionDC {
+public:
+    int maxSubArray(int A[], int n) {
+        int M = INT_MIN;
+        return myMax(A,0,n-1,M);
+    }
+    int myMax(int A[],int l,int r,int &M){
+        if(l>r) return INT_MIN;
+        int mid = (l+r)/2;
+        int lmax = myMax(A,l,mid-1,M);
+        int rmax = myMax(A,mid+1,r,M);
+        M = max(lmax,M);
+        M = max(rmax,M);
+        int ll,rr,sum;
+        ll=sum=0;
+        for(int i=mid-1;i>=l;--i){
+            sum += A[i];
+            if(sum>ll) ll = sum;
+        }
+        rr=sum=0;
+        for(int i=mid+1;i<=r;++i){
+            sum += A[i];
+            if(sum>rr) rr = sum;
+        }
+        M = max(ll+rr+A[mid],M);
+        return M;
+    }
+};
