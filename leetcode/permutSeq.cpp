@@ -28,6 +28,28 @@ string getPermutation(int n, int k) {
 
 	return res;
 }
+
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        vector<int> nums;
+        for(int i=0;i<n;++i) nums.push_back(i+1);
+        int m=1;
+        for(int i=1;i<=n;++i) m*=i;
+        string res = "";
+        k--;
+        for(int i=0;i<n;++i){
+            m /= (n-i);
+            int index = k/m;
+            res += char(nums[index]+'0');
+            for(int j=index;j<n-i;++j) nums[j] = nums[j+1];
+            k = k%m;
+            
+        }
+        return res;
+    }
+};
+
 int main(){
 	int n,k;
 	cin>>n>>k;
