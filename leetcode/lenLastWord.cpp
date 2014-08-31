@@ -24,6 +24,17 @@ int lengthOfLastWord(const char *s) {
 	}
 	return cnt;
 }
+
+int lengthOfLastWord2(const char *s) {
+        int i=0;
+        while(s[i]!='\0') i++;
+        i--;
+        while(i>=0&&s[i]==' ') i--;
+        int n = i;
+        while(i>=0&&s[i]!=' ') i--;
+        return n-i;
+}
+
 int main(int argc,char*argv[]){
 	return 0;
 }
