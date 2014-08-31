@@ -76,6 +76,33 @@ vector<vector<int> > combinationSum2_2(vector<int> &num, int target) {
         for(;it!=setRes.end();++it) res.push_back(*it);
         return res;
 }
+
+
+class Solution {
+public:
+    vector<vector<int> > combinationSum2(vector<int> &num, int target) {
+        int n = num.size();
+        sort(num.begin(),num.end());
+        vector<vector<int> > res;
+        vector<int> mid;
+        myCom(num,0,n,target,mid,res);
+        return res;
+    }
+    void myCom(vector<int> &num,int cur,int len,int target,vector<int> &mid,vector<vector<int> >&res){
+        if(target==0){
+            res.push_back(mid);
+            return;
+        }
+        for(int i=cur;i<len;++i){
+            if(num[i]>target) break;
+            if(i!=cur&&num[i]==num[i-1]) continue;
+            mid.push_back(num[i]);
+            myCom(num,i+1,len,target-num[i],mid,res);
+            mid.pop_back();
+        }
+    }
+};
+
 int main(int argc,char*argv[]){
 	vector<int> can;
 	can.push_back(2);
