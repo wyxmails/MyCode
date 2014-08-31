@@ -35,6 +35,25 @@ vector<int> plusOne(vector<int> &digits) {
 	return digits;
 }
 
+class Solution {
+public:
+    vector<int> plusOne(vector<int> &digits) {
+        int carr = 1;
+        int n = digits.size();
+        for(int i=n-1;i>=0;--i){
+            if(digits[i]+carr>9){
+                digits[i] = (digits[i]+carr)%10;
+                carr = 1;
+            }else{
+                digits[i] += carr;
+                carr = 0;
+            }
+        }
+        if(carr) digits.insert(digits.begin(),carr);
+        return digits;
+    }
+};
+
 int main(){
 	vector<int> tmpvec,tmpvec2;
 	tmpvec.clear();
