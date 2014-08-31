@@ -49,6 +49,33 @@ vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
 	sort(candidates.begin(),candidates.end());
 	return myComSum(candidates,target,0);
 }
+
+class Solution {
+public:
+    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+        int n = candidates.size();
+        sort(candidates.begin(),candidates.end());
+        vector<vector<int> > res;
+        vector<int> mid;
+        myCom(candidates,0,n,target,mid,res);
+        return res;
+    }
+    void myCom(vector<int> &can,int cur,int len,int target,vector<int>&mid,vector<vector<int> >&res){
+        if(target==0){
+            res.push_back(mid);
+            return;
+        }
+        for(int i=cur;i<len;++i){
+            if(can[i]>target) break;
+            //if(i+1<len&&can[i+1]==can[i]) continue;
+            if(i!=cur&&can[i]==can[i-1]) continue;
+            mid.push_back(can[i]);
+            myCom(can,i,len,target-can[i],mid,res);
+            mid.pop_back();
+        }
+    }
+};
+
 int main(int argc,char*argv[]){
 	vector<int> can;
 	can.push_back(2);
