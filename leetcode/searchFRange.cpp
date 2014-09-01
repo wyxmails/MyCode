@@ -76,3 +76,35 @@ public:
         return res;
     }
 };
+
+
+class Solution2 {
+public:
+    vector<int> searchRange(int A[], int n, int target) {
+        vector<int> res(2,-1);
+        if(n==0) return res;
+        int l,r;
+        l=0;r=n-1;
+        while(l<r){
+            int mid = (l+r)/2;
+            if(A[mid]<target){
+                l = mid+1;
+                continue;
+            }
+            r = mid;
+        }
+        if(A[l]==target) res[0] = l;
+        else return res;
+        r = n;
+        while(l<r){
+            int mid = (l+r)/2;
+            if(A[mid]>target){
+                r = mid;
+                continue;
+            }
+            l = mid+1;
+        }
+        res[1] = l-1;
+        return res;
+    }
+};
