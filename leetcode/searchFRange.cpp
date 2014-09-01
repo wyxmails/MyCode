@@ -36,3 +36,43 @@ vector<int> searchRange(int A[], int n, int target) {
 	}
 	return res;
 }
+
+class Solution {
+public:
+    vector<int> searchRange(int A[], int n, int target) {
+        static bool find = false;
+        vector<int> res(2,-1);
+        int l=0,r=n-1;
+        int mid;
+        while(l<=r){
+            mid = (l+r)/2;
+            if(A[mid]==target) break;
+            else if(A[mid]<target) l = mid+1;
+            else r = mid-1;
+        }
+        if(A[mid]==target){
+            int t = mid;
+            while(l<t){
+                int m = (l+t)/2;
+                if(A[m]<target) l = m+1;
+                else{
+                    if(m==t) break;
+                    t = m;
+                } 
+            }
+            res[0] = t;
+            t = mid;
+            while(t<r){
+                int m = (r+t)/2;
+                if(A[m]>target) r = m-1;
+                else{
+                    if(t==m) break;
+                    t = m;
+                }
+            }
+            if(t+1<n&&A[t+1]==target) res[1] = t+1;
+            else res[1] = t;
+        }
+        return res;
+    }
+};
