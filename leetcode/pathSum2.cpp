@@ -56,3 +56,28 @@ public:
         return res;
     }
 };
+class Solution2 {
+public:
+    vector<vector<int> > pathSum(TreeNode *root, int sum) {
+        vector<vector<int> > res;
+        if(root==NULL) return res;
+        vector<int> mid;
+        mySum(root,sum,mid,res);
+        return res;
+    }
+    void mySum(TreeNode *root, int sum,vector<int>&mid,vector<vector<int> >&res){
+        sum -= root->val;
+        mid.push_back(root->val);
+        if(root->left==NULL&&root->right==NULL){
+            if(sum==0) res.push_back(mid);
+            mid.pop_back();
+            return;
+        }
+        if(root->left!=NULL)
+            mySum(root->left,sum,mid,res);
+        if(root->right!=NULL)
+            mySum(root->right,sum,mid,res);
+        sum += root->val;
+        mid.pop_back();
+    }
+};
