@@ -30,6 +30,28 @@ int candy(vector<int> &ratings) {
 	}
 	return sum;
 }
+
+class Solution {
+public:
+    int candy(vector<int> &ratings) {
+        int n = ratings.size();
+        if(n<=1) return n;
+        vector<int> mark(n,1);
+        for(int i=1;i<n;++i){
+            if(ratings[i]>ratings[i-1])
+                mark[i] = mark[i-1]+1;
+        }
+        for(int i=n-2;i>=0;--i){
+            if(ratings[i]>ratings[i+1])
+                mark[i] = max(mark[i],mark[i+1]+1);
+        }
+        int res = 0;
+        for(int i=0;i<n;++i)
+            res += mark[i];
+        return res;
+    }
+};
+
 int main(){
 	vector<int> vec;
 	vec.clear();
