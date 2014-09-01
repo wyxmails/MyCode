@@ -47,6 +47,48 @@ ListNode *reverseKGroup(ListNode *head, int k) {
 	}
 	return head;
 }
+
+class Solution2 {
+public:
+    ListNode *reverseKGroup(ListNode *head, int k) {
+        if(head==NULL||head->next==NULL||k<=1) return head;
+        ListNode *h1,*h2,*t,*pre;
+        pre = NULL;
+        h2=head;
+        int i;
+        while(true){
+            h1 = h2;
+            for(i=0;i<k&&h2!=NULL;++i){
+                t = h2;
+                h2 = h2->next;
+            }
+            if(i<k) break;
+            vector<ListNode*> res = myR(h1,t);
+            if(pre==NULL) head = res[0];
+            else pre->next = res[0];
+            pre = res[1];
+            pre->next = h2;
+        }
+        return head;
+    }
+    vector<ListNode*> myR(ListNode *h,ListNode *t){
+        t->next = NULL;
+        ListNode *r1,*r2;
+        r1=r2=t=NULL;
+        while(h!=NULL){
+            r1 = h->next;
+            h->next = r2;
+            r2 = h;
+            h = r1;
+            if(t==NULL) t = r2;
+        }
+        vector<ListNode*> res;
+        res.push_back(r2);
+        res.push_back(t);
+        return res;
+    }
+};
+
 int main(){
 	ListNode *h,*t,*node;
 	h=t=node=NULL;
