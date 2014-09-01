@@ -36,3 +36,23 @@ bool hasPathSum(TreeNode *root, int sum) {
 		return hasPathSum(root->right,sum);
 	return false;
 }
+
+
+class Solution {
+public:
+    bool hasPathSum(TreeNode *root, int sum) {
+        if(root==NULL) return false;
+        int cur = 0;
+        return mySum(root,cur,sum);
+    }
+    bool mySum(TreeNode *root, int cur, int sum){
+        cur += root->val;
+        if(root->left==NULL&&root->right==NULL) return cur==sum;
+        if(root->left!=NULL&&mySum(root->left,cur,sum))
+            return true;
+        if(root->right!=NULL&&mySum(root->right,cur,sum))
+            return true;
+        cur -= root->val;
+        return false;
+    }
+};
