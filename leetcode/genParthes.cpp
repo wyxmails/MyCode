@@ -51,3 +51,32 @@ vector<string> generateParenthesis(int n) {
 	}
 	return vecres;
 }
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        int l=0,r=0;
+        vector<string> res;
+        string mid = "";
+        myGen(l,r,n,mid,res);
+        return res;
+    }
+    void myGen(int l,int r,int n,string &mid,vector<string>&res){
+        if(l>n) return;
+        if(l==n){
+            mid.append(n-r,')');
+            res.push_back(mid);
+            mid.resize(mid.size()-n+r);
+            return;
+        }
+        mid.append(1,'(');
+        myGen(l+1,r,n,mid,res);
+        mid.resize(mid.size()-1);
+        if(r<l){
+            mid.append(1,')');
+            myGen(l,r+1,n,mid,res);
+            mid.resize(mid.size()-1);
+        }
+            
+    }
+};
