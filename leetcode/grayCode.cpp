@@ -31,3 +31,20 @@ public:
         return res;
     }
 };
+
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        /*nth results = (n-1)th results + [(1<<(n-1))+reverse((n-1)th results)]*/
+        vector<int> res;
+        res.push_back(0);
+        for(int i=0;i<n;++i){
+            int len = res.size();
+            int highbits = 1<<i;
+            for(int j=len-1;j>=0;--j){
+                res.push_back(highbits+res[j]);
+            }
+        }
+        return res;
+    }
+};
