@@ -24,3 +24,24 @@ public:
         return -1;
     }
 };
+
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+        int n = gas.size();
+        if(n<=0) return 0;
+        for(int i=0;i<n;){
+            int ret = 0;
+            bool find = true;
+            int j=i;
+            for(;j-i<n&&find;++j){
+                ret = ret+gas[j%n]-cost[j%n];
+                if(ret<0) find = false;
+            }
+            if(find) return i;
+            i = j;
+        }
+        return -1;
+    }
+};
