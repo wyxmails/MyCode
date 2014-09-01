@@ -26,3 +26,23 @@ vector<string> anagrams(vector<string> &strs) {
 	}
 	return res;
 }
+
+class Solution {
+public:
+    vector<string> anagrams(vector<string> &strs) {
+        unordered_map<string,vector<string> > mark;
+        for(int i=0;i<strs.size();++i){
+            string tmp = strs[i];
+            sort(tmp.begin(),tmp.end());
+            mark[tmp].push_back(strs[i]);
+        }
+        auto it = mark.begin();
+        vector<string> res;
+        for(;it!=mark.end();++it){
+            if(it->second.size()>1){
+                res.insert(res.end(),it->second.begin(),it->second.end());
+            }
+        }
+        return res;
+    }
+};
