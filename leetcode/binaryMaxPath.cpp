@@ -52,3 +52,36 @@ public:
         return res;
     }
 };
+
+
+
+typedef struct res{
+    int maxSum;
+    int maxH;
+ }res;
+class Solution {
+public:
+    int maxPathSum(TreeNode *root) {
+        if(root==NULL) return 0;
+        res myRes = myMax(root);
+        return myRes.maxSum;
+    }
+    res myMax(TreeNode*root){
+        res myRes,myL,myR;
+        myRes.maxSum = root->val;
+        myRes.maxH = root->val;
+        if(root->left==NULL&&root->right==NULL) return myRes;
+        if(root->left!=NULL){
+            myL = myMax(root->left);
+            myRes.maxH = max(myL.maxH+root->val,myRes.maxH);
+            myRes.maxSum = max(myRes.maxH,myL.maxSum);
+        }
+        if(root->right!=NULL){
+            myR = myMax(root->right);            
+            myRes.maxSum = max(max(myR.maxSum,myRes.maxSum),myRes.maxH+myR.maxH);
+            myRes.maxH = max(myRes.maxH,root->val+myR.maxH);
+        }
+        return myRes;
+    }
+};
+
