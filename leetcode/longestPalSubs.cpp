@@ -65,3 +65,21 @@ string longestPalindrome2(string s) {
         }
         return s.substr(begin,Max);
     }
+string longestPalindrome3(string s) {
+        int n = s.size();
+        if(n==0) return s;
+        int l,r;
+        l=r=0;
+        int j,k;
+        for(int i=0;i<n;++i){
+            j=k=i;
+            while(j>=0&&k<n&&s[j]==s[k]){j--;k++;}
+            j++;k--;
+            if(k-j>r-l){l = j;r=k;}
+            j=i;k=i+1;
+            while(j>=0&&k<n&&s[j]==s[k]){j--;k++;}
+            j++;k--;
+            if(k-j>r-l){l=j;r=k;}
+        }
+        return s.substr(l,r-l+1);
+}
