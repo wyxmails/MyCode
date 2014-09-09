@@ -6,6 +6,7 @@
 using namespace std;
 // in order traverse the tree, and count the number until k.
 // need a stack to reverse the count increase sequence.
+// kth smallest
 struct TreeNode{
 	int val;
 	TreeNode*left,*right;
@@ -32,7 +33,8 @@ TreeNode *findKthBST(TreeNode*root,int k){
 	}
 	return cur;
 }
-//solution do not change the tree
+// solution do not change the tree
+// kth largest
 struct NodeStatus{
 	TreeNode *node;
 	int status;
@@ -51,15 +53,15 @@ TreeNode *findKthBST2(TreeNode*root,int k){
 		cur = nsCur.node;
 		if(nsCur.status==0){
 			nsCur.status = 1;
-			if(cur->left!=NULL){
-				ns.node = cur->left; ns.status = 0;
+			if(cur->right!=NULL){
+				ns.node = cur->right; ns.status = 0;
 				myS.push(ns);
 			}
 		}else{
 			count++;
 			myS.pop();
-			if(cur->right!=NULL){
-				ns.node = cur->right; ns.status = 0;
+			if(cur->left!=NULL){
+				ns.node = cur->left; ns.status = 0;
 				myS.push(ns);
 			}
 		}
