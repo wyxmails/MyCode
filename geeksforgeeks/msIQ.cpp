@@ -6,3 +6,4 @@
 //solution1: sum equal and multiplication equal
 //solution2: XOR result equals zero
 //solution3: sum equal and XOR result zero
+

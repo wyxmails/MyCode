@@ -4,6 +4,7 @@
  which will be like (1,2,3,4,5,6,7,0,0,0,0,0,0,0}, 
  without using any other temporary array. 
  */
+
 #include <iostream>
 #include <vector>
 using namespace std;

@@ -9,8 +9,7 @@
  now write a c code which set all node’s next_larger pointer.
  where next_largest point to the next larger then its own value 
  and largest value node’s next_larger pointer points to NULL
- i.e.
- if LL is 3->1->5->6->4
+ i.e.   if LL is 3->1->5->6->4
  then 3's next_larger points to 4
  and 1's next_larger points to 3
  and 5's next_larger points to 6

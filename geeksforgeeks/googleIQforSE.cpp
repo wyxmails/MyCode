@@ -4,6 +4,7 @@
  Basically you have to find if a given string can be 
  represented from a substring by iterating it “n” times. n >= 2
  An example would suffice –
+
  Function should return true if
  1) S = "abab"
  2) S = "abcdabcd"
