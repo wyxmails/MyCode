@@ -22,6 +22,7 @@
 #include <string>
 #include <climits>
 #include <tr1/unordered_map>
+#include <vector>
 
 using namespace std;
 using namespace std::tr1;
@@ -61,6 +62,35 @@ bool isPattern(string & S){
 	}
 }
 
+//factor 
+//for example if n=10!, then we will at most go through S 9times.
+bool isPattern2(string &S){
+	int n = S.size();
+	int len;
+	vector<int> steps;
+	for(int i=2;i<=n/2;i++){
+		if(n%i) continue;
+		if(steps.size()>0){
+			bool wrong = false;
+			for(int j=0;j<steps.size()&&!wrong;++j){
+				if(i%steps[j]==0) wrong = true;
+			}
+			if(wrong) continue;
+		}
+		len = n/i;
+		bool pattern = true;
+		for(int j=1;j<i&&pattern;++j){
+			for(int k=0;k<len&&pattern;++k){
+				if(S[k]!=S[j*len+k])
+					pattern = false;
+			}
+		}
+		if(pattern) return true;
+		steps.push_back(i);
+	}
+	return false;
+}
+
 int main(int argc,char*argv[]){
 	//cout << LCM(10,15) << endl;
 	//cout << LCM(12,16) << endl;
@@ -71,30 +101,30 @@ int main(int argc,char*argv[]){
 	//return 0;
 	cout << "True test cases: " << endl;
 	string S = "abab";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 	S = "abcdabcd";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 	S = "abcabcabc";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 	S = "zzxzzxzzx";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 	S = "zzxxzzxxzzxx";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 
 	cout << endl << "False test cases: " << endl;
 	S = "abac";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 	S = "abcdabbd";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 	S = "abcabcefg";
-	if(isPattern(S)) cout << "true" << endl;
+	if(isPattern2(S)) cout << "true" << endl;
 	else cout << "false" << endl;
 	S = "zzxzzyzzx";
 	return 0;
