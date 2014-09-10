@@ -4,7 +4,6 @@
  This has to be done in place 
  as we have given that array has just enough space 
  to hold the expanded array.
-
 example:
 1)input: a1b1c1
 output:abc
