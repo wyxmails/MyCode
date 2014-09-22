@@ -1,3 +1,7 @@
+/*
+ Implement an algorithm to determine if a string has all unique characters. 
+ What if you cannot use additional data structures
+ */
 #include <iostream>
 #include <string>
 using namespace std;
@@ -15,7 +19,7 @@ bool isUnique2(string str){
 	}
 	return true;
 }
-
+//assume the string only contains lower letter from a through z
 bool isUnique(string str){
 	int checker = 0;
 	for(int i=0;i<str.size();++i){
