@@ -28,6 +28,20 @@ void rotate(vector<vector<int> > &image){
 	}
 }
 
+void rotate2(vector<vector<int> > &image){
+	int n = image.size();
+	if(n<=1) return;
+	for(int i=0;i<n/2;++i){
+		for(int j=i;j<n-i-1;++j){
+			int tmp = image[i][j];
+			image[i][j] = image[n-j-1][i];
+			image[n-j-1][i] = image[n-i-1][n-j-1];
+			image[n-i-1][n-j-1] = image[j][n-i-1];
+			image[j][n-i-1] = tmp;
+		}
+	}
+}
+
 int main(int argc,char*argv[]){
 	int n = 5;
 	vector<vector<int> > image(n,vector<int>(n,0));
@@ -40,7 +54,7 @@ int main(int argc,char*argv[]){
 		}
 		cout << endl;
 	}
-	rotate(image);
+	rotate2(image);
 	cout << "after roate" << endl;
 	for(int i=0;i<n;++i){
 		for(int j=0;j<n;++j){
