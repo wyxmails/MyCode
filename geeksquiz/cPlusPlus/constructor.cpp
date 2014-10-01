@@ -26,6 +26,10 @@ class Y{
 		}
 };
 
+typedef struct structTest{
+	int v;
+	structTest(){cout << "vv--struct Test" << endl;}
+}st;
 int main(){
 	cout << "Main Started" << endl;
 	test t(1);

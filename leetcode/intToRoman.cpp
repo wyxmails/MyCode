@@ -2,6 +2,9 @@
  Given an integer, convert it to a roman numeral.
  Input is guaranteed to be within the range from 1 to 3999.
  */
+#include <tr1/unordered_map>
+#include <tr1/unordered_set>
+using namespace std::tr1;
 string intToRoman(int num) {
 	// Start typing your C/C++ solution below
 	// DO NOT write int main() function    

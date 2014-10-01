@@ -86,6 +86,18 @@ template<int n> struct funStruct{
 template<>struct funStruct<0>{
 	static const int val = 1;
 };
+
+template <class T,int N>
+T fun1(T arr[],int size){
+	if(size>N)
+		cout << "Not possible" << endl;
+	T mm = arr[0];
+	for(int i=1;i<size;++i){
+		if(mm<arr[i])
+			mm = arr[i];
+	}
+	return mm;
+}
 int main(int argc,char*argv[]){
 	fun<int>(1);
 	fun<int>(1);
@@ -125,5 +137,9 @@ int main(int argc,char*argv[]){
 	cout << MM<int>(aaa,bbb) << endl;
 	//template metaprogramming
 	cout << funStruct<10>::val << endl; //calculation is done at compile time
+	//
+	cout << "additional test: " << endl;
+	int arr4[] = {12,3,14};
+	cout << fun1<int,1>(arr4,3) << endl;
 	return 0;
 }

@@ -1,0 +1,2 @@
+File="out"
+awk '{if(NR<=4) print $0 }' data>$File

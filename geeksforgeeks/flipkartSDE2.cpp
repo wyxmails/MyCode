@@ -103,41 +103,29 @@ Output –
 #include <vector>
 #include <map>
 #include <set>
+#include <algorithm>
 using namespace std;
 
-void myTrav(int vec[],int i,map<int,int>& use,map<int,set<int> >&mark){
-	if(vec[i]==-1){
-		use[i-1] = 0;
-		mark[0].insert(i-1);
-	}else{
-		if(use.find(vec[i])!=use.end()){
-			mark[use[vec[i]]+1].insert(i-1);
-			use[i-1] = use[vec[i]]+1;
-		}else{
-			myTrav(vec,vec[i]+1,use,mark);
-		}
-	}
-	return;
-}
 
 vector<vector<int> > levelTraverse(int vec[]){
-	map<int,set<int> > mark;
-	map<int,int> use;
+	map<int,vector<int> > tree;
 	int n = vec[0];
 	for(int i=1;i<=n;++i){
-		myTrav(vec,i,use,mark);
+		tree[vec[i]].push_back(i-1);
 	}
-	map<int,set<int> >::iterator it;
 	vector<vector<int> > res;
 	vector<int> tmp;
-	for(it=mark.begin();it!=mark.end();++it){
+	res.push_back(tree[-1]);
+	int i=0;
+	while(i<res.size()){
 		tmp.clear();
-		set<int>::iterator it1 = it->second.begin();
-		for(;it1!=it->second.end();++it1){
-			tmp.push_back(*it1);
+		for(int j=0;j<res[i].size();++j){
+			tmp.insert(tmp.end(),tree[res[i][j]].begin(),tree[res[i][j]].end());
 		}
-		res.insert(res.begin(),tmp);
+		if(tmp.size()>0) res.push_back(tmp);
+		i++;
 	}
+	reverse(res.begin(),res.end());
 	return res;
 }
 
@@ -145,6 +133,31 @@ int main(int argc,char*argv[]){
 	int arr[] = {5,-1,0,0,2,1};
 	vector<vector<int> > res;
 	res = levelTraverse(arr);
+	cout << "-----arr-----" << endl;
+	for(int i=0;i<res.size();++i){
+		for(int j=0;j<res[i].size();++j)
+			cout << res[i][j] << " ";
+		cout << endl;
+	}
+	cout << "-----arr1-----" << endl;
+	int arr1[] = {9,8,7,0,5,5,8,7,0,-1};
+	res = levelTraverse(arr1);
+	for(int i=0;i<res.size();++i){
+		for(int j=0;j<res[i].size();++j)
+			cout << res[i][j] << " ";
+		cout << endl;
+	}
+	cout << "-----arr2-----" << endl;
+	int arr2[] = {45,24,42,4,30,29,43,22,15,26,36,26,16,3,22,21,41,18,16,34,41,12,29,32,30,43,15,4,38,36,-1,24,42,18,6,21,38,6,17,32,17,3,34,12,14,14};
+	res = levelTraverse(arr2);
+	for(int i=0;i<res.size();++i){
+		for(int j=0;j<res[i].size();++j)
+			cout << res[i][j] << " ";
+		cout << endl;
+	}
+	cout << "-----arr3-----" << endl;
+	int arr3[]={33,17,25,0,14,7,2,5,25,18,8,16,27,10,9,19,7,31,31,19,0,8,14,9,17,18,2,30,16,30,10,5,-1,27};
+	res = levelTraverse(arr3);
 	for(int i=0;i<res.size();++i){
 		for(int j=0;j<res[i].size();++j)
 			cout << res[i][j] << " ";
