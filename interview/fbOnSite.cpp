@@ -11,6 +11,7 @@ using namespace std;
  s1 is a string, t1 is a pattern contains characters and . and *
  */
 bool isMatch(char*s1,char*t1){
+	if(s1==NULL||t1==NULL) return false;
 	if(*t1=='\0') return (*s1=='\0');
 
 	if(*(t1+1)!='*')
@@ -41,6 +42,18 @@ void mvZeros(vector<int> &vec){
 	}
 }
 
+void mvZerosInOrder(vector<int>&vec){
+	int n = vec.size();
+	if(n<=1) return;
+	int cnt=0;
+	for(int i=0;i<n;++i){
+		if(vec[i]!=0){
+			vec[cnt++] = vec[i];
+		}
+	}
+	while(cnt<n) vec[cnt++] = 0;
+}
+
 /*
 alg3:
 hex expression
@@ -60,77 +73,67 @@ lookup(...)
 int L=0;
 struct TreeNode {
 	char c;
-	vector<TreeNode*> children;
-	TreeNode(char c):c(c){}
-};
-void insert(TreeNode *root,string s,int len=0,bool flag = false){
-	if(s.size()==0) return;
-	vector<TreeNode*> &child = root->children;
-	len++;
-	if(child.size()==0){
-		TreeNode*n = new TreeNode(s[0]);
-		if(!flag){
-			flag = true;
-			if(len>L) L = len;
-		}
-		child.push_back(n);
-		s = s.substr(1);
-		insert(n,s,len,flag);
-	}else{
-		int i=0;
-		bool find = false;
-		for(;i<child.size();++i){
-			if(child[i]->c==s[0]){
-				find = true;
-				break;
-			}
-		}
-		if(find){
-			s = s.substr(1);
-			insert(child[i],s,len,flag);	
-		}else{
-			TreeNode*n = new TreeNode(s[0]);
-			if(!flag){
-				flag = true;
-				if(len>L) L = len;
-			}
-			child.push_back(n);
-			s = s.substr(1);
-			insert(n,s,len,flag);
+	int childNum;
+	TreeNode* children[16];
+	TreeNode(char c):c(c),childNum(0){
+		for(int i=0;i<16;++i){
+			children[i] = NULL;
 		}
 	}
+};
+void insert(TreeNode *root,string s,int len=0,bool bUpdateL = false){
+	if(s.size()==0) return;
+	len++;
+	int cVal = int(s[0]-'0');
+	if(cVal<0||cVal>=10)
+		cVal = int(s[0]-'a')+10;
+	if(root->children[cVal]==NULL){
+		TreeNode*n = new TreeNode(s[0]);
+		if(!bUpdateL){
+			bUpdateL = true;
+			if(len>L) L = len;
+		}
+		root->children[cVal] = n;
+		root->childNum++;
+		s = s.substr(1);
+		insert(n,s,len,bUpdateL);
+	}else{
+		s = s.substr(1);
+		insert(root->children[cVal],s,len,bUpdateL);
+	}
+	
 }
 
 string lookup(TreeNode*root,string s){
 	int n = s.size();
 	int cnt=0;
-	vector<TreeNode*> child;
 	string res = "";
-	while(cnt<L){
-		child = root->children;
-		if(child.size()==1){
-			root = child[0];
-			res += root->c;
-			cnt++;
+	TreeNode *curNode = root;
+	while(cnt<L&&cnt<n){
+		int cVal = int(s[cnt]-'0');
+		if(cVal<0||cVal>=10)
+			cVal = int(s[cnt]-'a')+10;
+		if(curNode->children[cVal]==NULL){
+			cerr << "Not Found" << endl;
+			return s;
 		}else{
-			if(cnt<n){
-				int i=0;
-				root = NULL;
-				for(;i<child.size();++i){
-					if(child[i]->c==s[cnt]){
-						root = child[i];
-						cnt++;
-						break;
-					}
-				}
-			}
-			if(cnt>=n||root==NULL){
-				cerr << "Not found" << endl;
-				return s;
-			}
-			res += root->c;
-			cnt++;
+			res += curNode->children[cVal]->c;   
+			curNode = curNode->children[cVal];
 		}
+		cnt++;
+	}
+	while(cnt<L){
+		if(curNode->childNum>1){
+			cerr << "Not Found" << endl;
+			return s;
+		}else{
+			int i;
+			for(i=0;i<16;++i)
+				if(curNode->children[i]!=NULL) break;
+			res += curNode->children[i]->c;
+			curNode = curNode->children[i];
+		}
+		cnt++;
 	}
 	return res;
 }
@@ -165,7 +168,7 @@ void sortBalls(vector<Ball>&balls){
 }
 
 int main(int argc,char*argv[]){
-	/*alg1*/
+	cout << "alg1" << endl;
 	char*s1 = "ab";
 	char*t1 = "a*";
 	if(isMatch(s1,t1)) cout << "Match" << endl;
@@ -174,7 +177,7 @@ int main(int argc,char*argv[]){
 	t1 = "a*";
 	if(isMatch(s1,t1)) cout << "Match" << endl;
 	else cout << "Not Match" << endl;
-	/*alg2*/
+	cout << "alg2" << endl;
 	vector<int> vec;
 	srand(time(NULL));
 	for(int i=0;i<10;++i){
@@ -183,11 +186,12 @@ int main(int argc,char*argv[]){
 		cout << tmp << " ";
 	}
 	cout << endl;
-	mvZeros(vec);
+	//mvZeros(vec);
+	mvZerosInOrder(vec);
 	for(int i=0;i<10;++i)
 		cout << vec[i] << " ";
 	cout << endl;
-	/*alg3*/
+	cout << "alg3" << endl;
 	TreeNode*root = new TreeNode(' ');
 	cout << "L: " <<  L << endl;
 	insert(root,"abc123");
@@ -195,7 +199,7 @@ int main(int argc,char*argv[]){
 	insert(root,"abd123");
 	cout << "L: " <<  L << endl;
 	cout << lookup(root,"abd1") << endl;
-	/*alg4*/
+	cout << "alg4" << endl;
 	vector<Ball> balls;
 	int blue,white,red;
 	blue=white=red=0;
