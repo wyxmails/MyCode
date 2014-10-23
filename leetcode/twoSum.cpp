@@ -46,6 +46,37 @@ vector<int> twoSum(vector<int> &numbers, int target) {
 	index.push_back(i2);
 	return index;
 }
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &numbers, int target) {
+        vector<int> res;
+        unordered_map<int,vector<int> > mark;
+        int n = numbers.size();
+        for(int i=0;i<n;++i)
+            mark[numbers[i]].push_back(i+1);
+        auto it = mark.begin();
+        for(;it!=mark.end();++it){
+            auto it1 = mark.find(target-it->first);
+            if(it1!=mark.end()){
+                if(it==it1){
+                    if(it->second.size()==2){
+                        res.push_back(min(it->second[0],it->second[1]));
+                        res.push_back(max(it->second[0],it->second[1]));
+                        break;
+                    }
+                }else{
+                    res.push_back(min(it->second[0],it1->second[0]));
+                    res.push_back(max(it->second[0],it1->second[0]));
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+
 int main(){
 	int n,target,tmp;
 	vector<int> nums;
