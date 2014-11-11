@@ -29,3 +29,22 @@ string convert(string s, int nRows) {
 	}
 	return fin;
 }
+
+class Solution {
+public:
+    string convert(string s, int nRows) {
+        vector<string> vec(nRows,"");
+        int n = s.size();
+        int c=0,i=0;
+        while(i<n){
+            for(int j=0;j<nRows&&i<n;++j)
+                vec[j] += s[i++];
+            for(int j=nRows-2;j>0&&i<n;--j)
+                vec[j] += s[i++];
+        }
+        string res = "";
+        for(i=0;i<nRows;++i)
+            res += vec[i];
+        return res;
+    }
+};
