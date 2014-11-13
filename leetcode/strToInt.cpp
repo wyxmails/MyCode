@@ -31,30 +31,26 @@ You are responsible to gather all the input requirements up front.
  of representable values, 
  INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.
  */
-int atoi(const char *str) {
-	// Start typing your C/C++ solution below
-	// DO NOT write int main() function
-	int IMAX = 2147483647;
-	int IMIN = -2147483648;
-	int bits,i,start;
-	long long res = 0;
-	bool neg = false;
-	i=0;
-	while(str[i]==' ') i++;
-	if(str[i]=='-'){
-		neg = true;
-		i++;
-	}else if(str[i]=='+'){
-		i++;
-	}
-	start = i;
-	for(;str[i]!='\0';++i){
-		bits = str[i]-'0';
-		if(bits>9||bits<0) break;
-		res = res*10+bits;
-	}
-	if(neg) res = -res;
-	if(res>=IMAX) return IMAX;
-	if(res<=IMIN) return IMIN;
-	return res;
-}
+class Solution {
+public:
+    int atoi(const char *str) {
+        bool neg=false;
+        while(*str==' ') str++;
+        if(*str=='-'){ neg = true; str++;}
+        else if(*str=='+') str++;
+        long long res = 0;
+        while(*str!='\0'){
+            int v = *str-'0';
+            if(v<0||v>9) break;
+            res = res*10 + v;
+            if(res>INT_MAX) break;
+            str++;
+        }
+        if(neg){
+            if(res>INT_MAX) res = INT_MIN;
+            return -res;
+        } 
+        if(res>INT_MAX) res = INT_MAX;
+        return res;
+    }
+};
