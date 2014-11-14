@@ -25,3 +25,14 @@ ListNode *swapPairs(ListNode *head) {
 	}
 	return head;
 }
+
+class Solution {
+public:
+    ListNode *swapPairs(ListNode *head) {
+        if(head==NULL||head->next==NULL) return head;
+        ListNode *h = head->next,*next = head->next->next;
+        h->next = head;
+        head->next = swapPairs(next);
+        return h;
+    }
+};
