@@ -52,3 +52,23 @@ bool isValid2(string s) {
         }
         return myStack.empty();
 }
+class Solution {
+public:
+    bool isValid(string s) {
+        unordered_map<char,int> mark;
+        mark['('] = -1; mark[')'] = 1;
+        mark['['] = -2; mark[']'] = 2;
+        mark['{'] = -3; mark['}'] =3;
+        int n = s.size();
+        stack<int> ms;
+        for(int i=0;i<n;++i){
+            if(ms.empty()||mark[s[i]]<0) ms.push(i);
+            else{
+                int t = ms.top();
+                ms.pop();
+                if(mark[s[t]]+mark[s[i]]!=0) return false;
+            }
+        }
+        return ms.empty();
+    }
+};
