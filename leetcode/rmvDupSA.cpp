@@ -23,3 +23,13 @@ int removeDuplicates(int A[], int n) {
 	}
 	return len;
 }
+class Solution {
+public:
+    int removeDuplicates(int A[], int n) {
+        int l=-1;
+        for(int i=0;i<n;++i){
+            if(i==0||A[i]!=A[i-1]) A[++l] = A[i];
+        }
+        return l+1;
+    }
+};
