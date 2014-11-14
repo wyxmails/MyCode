@@ -46,6 +46,18 @@ int removeElement3(int A[], int n, int elem) {
         }
         return n;
 }
+
+class Solution {
+public:
+    int removeElement(int A[], int n, int elem) {
+        int l=0,r=n-1;
+        while(l<=r){
+            if(A[l]==elem) A[l] = A[r--];
+            else l++;
+        }
+        return r+1;
+    }
+};
     
 int main(){
 	srand(time(0));
