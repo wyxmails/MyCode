@@ -138,3 +138,30 @@ vector<string> letterCombinations2(string digits) {
         myCom(res,digits,str,dic);
     }
     
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        mark['2'] = "abc"; mark['3'] = "def";
+        mark['4'] = "ghi"; mark['5'] = "jkl";
+        mark['6'] = "mno"; mark['7'] = "pqrs";
+        mark['8'] = "tuv"; mark['9'] = "wxyz";
+        string mid = "";
+        vector<string> res;
+        myCom(0,digits,mid,res);
+        return res;
+    }
+    void myCom(int index,string digits,string &mid,vector<string>&res){
+        if(index>=digits.size()){
+            res.push_back(mid);
+            return;
+        }
+        string tmp =mark[digits[index]];
+        for(int i=0;i<tmp.size();++i){
+            mid += tmp[i];
+            myCom(index+1,digits,mid,res);
+            mid.resize(mid.size()-1);
+        }
+    }
+private:
+        unordered_map<char,string> mark;
+};
