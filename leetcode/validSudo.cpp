@@ -52,6 +52,35 @@ bool isValidSudoku(vector<vector<char> > &board) {
 	}
 	return true;
 }
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char> > &board) {
+        int n = board.size();
+        for(int i=0;i<n;++i)
+        for(int j=0;j<n;++j){
+            if(board[i][j]!='.'){
+                if(!valid(board,i,j)) return false;
+            }
+        }
+        return true;
+    }
+    bool valid(vector<vector<char> > &board,int i,int j){
+        int n = board.size();
+        for(int k=0;k<n;++k){
+            if(k!=i&&board[k][j]==board[i][j]) return false;
+            if(k!=j&&board[i][k]==board[i][j]) return false;
+        }
+        for(int r=(i/3)*3;r<(i/3+1)*3;++r){
+            for(int c=(j/3)*3;c<(j/3+1)*3;++c){
+                if(r==i&&c==j) continue;
+                if(board[r][c]==board[i][j]) return false;
+            }
+        }
+        return true;
+    }
+};
+
 int main(int argc,char*argv[]){
 	return 0;
 }
