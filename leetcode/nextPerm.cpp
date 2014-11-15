@@ -44,19 +44,21 @@ void nextPermutation(vector<int> &num) {
 		j--;
 	}
 }
-void nextPermutation2(vector<int> &num) {
+class Solution {
+public:
+    void nextPermutation(vector<int> &num) {
         int n = num.size();
-        if(n==1) return;
-        int i = n-1;
-        while(i>0&&num[i-1]>=num[i]) i--;
-        if(i==0) sort(num.begin(),num.end());
+        int i=n-1;
+        for(;i>0;--i)
+            if(num[i]>num[i-1]) break;
+        if(i==0) reverse(num.begin(),num.end());
         else{
-            i--;
-            int j=n-1;
-            while(j>i&&num[j]<=num[i]) j--;
-            int tmp = num[i];
-            num[i] = num[j];
-            num[j] = tmp;
-            sort(num.begin()+i+1,num.end());
+            reverse(num.begin()+i,num.end());
+            int cur = i-1;
+            while(i<n&&num[i]<=num[cur]) i++;
+            int tmp = num[cur];
+            num[cur] = num[i];
+            num[i] = tmp;
         }
-}
+    }
+};
