@@ -54,3 +54,25 @@ public:
         return res;
     }
 };
+
+class Solution {
+public:
+    int trap(int A[], int n) {
+        vector<int> mark(n,0);
+        int M=0;
+        for(int i=0;i<n;++i){
+            mark[i] = M;
+            M = max(M,A[i]);
+        }
+        M = 0;
+        for(int i=n-1;i>=0;--i){
+            mark[i] = min(mark[i],M);
+            M = max(M,A[i]);
+        }
+        int res = 0;
+        for(int i=0;i<n;++i){
+            res += mark[i]>A[i]?mark[i]-A[i]:0;
+        }
+        return res;
+    }
+};
