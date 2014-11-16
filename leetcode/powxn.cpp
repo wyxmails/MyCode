@@ -43,6 +43,27 @@ double pow2(double x, int n) {
         } 
         return flag?1.0/res:res;
 }
+
+class Solution {
+public:
+    double pow(double x, int n) {
+        if(n>0) return realPow(x,n);
+        return 1/realPow(x,-n);
+    }
+    double realPow(double x,int n){
+        if(n==0) return 1.0;
+        if(n==1) return x;
+        if(x==1) return x;
+        if(x==-1) return (n%2)?x:-x;
+        if(n%2){
+            double res = realPow(x,n/2);
+            return x*res*res;
+        }
+        double res = realPow(x,n/2);
+        return res*res;
+    }
+};
+
 int main(){
 	int n;
 	double x;
