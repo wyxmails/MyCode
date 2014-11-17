@@ -96,6 +96,25 @@ string addBinary2(string a, string b) {
         if(carr) res = '1'+res;
         return res;
 }
+
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int n1 = a.size(),n2=b.size();
+        int carr=0;
+        string res = "";
+        int i,j;
+        for(i=n1-1,j=n2-1;i>=0||j>=0;--i,--j){
+            if(i>=0) carr += int(a[i]-'0');
+            if(j>=0) carr += int(b[j]-'0');
+            res = char(carr%2+'0')+res;
+            carr /= 2;
+        }
+        if(carr) res = char(carr+'0')+res;
+        return res;
+    }
+};
+
 int main(){
 	string s1,s2;
 	cin>>s1>>s2;
