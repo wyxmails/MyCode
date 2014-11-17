@@ -35,3 +35,28 @@ public:
         return res;
     }
 };
+
+class Solution {
+public:
+    string simplifyPath(string path) {
+        stack<string> ms;
+        int start=0,n=path.size();
+        for(int i=0;i<=n;++i){
+            if(i==n||path[i]=='/'){
+                string tmp = path.substr(start,i-start);
+                start = i+1;
+                if(tmp==".."){
+                    if(!ms.empty()) ms.pop();
+                }else if(tmp!="."&&tmp.size()>0)
+                        ms.push(tmp);
+            }
+        }
+        if(ms.empty()) return "/";
+        string res = "";
+        while(!ms.empty()){
+            res = "/"+ms.top()+res;
+            ms.pop();
+        }
+        return res;
+    }
+};
