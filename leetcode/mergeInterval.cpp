@@ -12,22 +12,26 @@ struct Interval {
     Interval() : start(0), end(0) {}
     Interval(int s, int e) : start(s), end(e) {}
 };
-bool isLower(const Interval&i1,const Interval&i2){
-return i1.start<i2.start;
-}
-vector<Interval> merge(vector<Interval> &intervals) {
-    // Start typing your C/C++ solution below
-    // DO NOT write int main() function
-    if(intervals.size()<=1) return intervals;
-    sort(intervals.begin(),intervals.end(),isLower);
-    for(int i=0;i<intervals.size()-1;++i){
-        if(intervals[i].end>=intervals[i+1].start){
-            if(intervals[i].end<intervals[i+1].end){
-                intervals[i].end = intervals[i+1].end;
+
+ bool cmp(const Interval&i1,const Interval&i2){
+     return i1.start<i2.start;
+ }
+class Solution {
+public:
+    vector<Interval> merge(vector<Interval> &intervals) {
+        if(intervals.size()<=1) return intervals;
+        sort(intervals.begin(),intervals.end(),cmp);
+        vector<Interval> res;
+        res.push_back(intervals[0]);
+        int j=0;
+        for(int i=1;i<intervals.size();++i){
+            if(intervals[i].start<=res[j].end) 
+                res[j].end = max(res[j].end,intervals[i].end);
+            else {
+                res.push_back(intervals[i]);
+                j++;
             }
-            intervals.erase(intervals.begin()+i+1);
-            i--;
         }
+        return res;
     }
-    return intervals;
-}
+};
