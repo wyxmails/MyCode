@@ -27,3 +27,17 @@ public:
         return false;
     }
 };
+class Solution {
+public:
+    bool search(int A[], int n, int target) {
+        int l=0,r=n-1;
+        while(l<=r){
+            int m = (l+r)/2;
+            if(A[m]==target||A[l]==target||A[r]==target) return true;
+            if(A[m]>target&&A[l]<=target) r = m-1;
+            else if(A[m]<target&&A[r]>=target) l = m+1;
+            else l++;
+        }
+        return false;
+    }
+};
