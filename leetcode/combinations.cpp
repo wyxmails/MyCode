@@ -13,31 +13,24 @@ If n = 4 and k = 2, a solution is:
   [1,4],
 ]
 */
-void myCom(set<vector<int> >& res,vector<int>& cur,int l,int r,int k){
-        if(cur.size()==k){
-            res.insert(cur);
+class Solution {
+public:
+    vector<vector<int> > combine(int n, int k) {
+        vector<int> mid;
+        vector<vector<int> > res;
+        combine(1,n,k,mid,res);
+        return res;
+    }
+    void combine(int cur,int n,int k,vector<int>&mid,vector<vector<int> >&res){
+        if(mid.size()==k){
+            res.push_back(mid);
             return;
         }
-        for(int i=l;i<=r-(k-cur.size())+1;++i){
-            cur.push_back(i);
-            myCom(res,cur,i+1,r,k);
-            cur.pop_back();
+        if(cur>n) return;
+        for(int i=cur;i<=n;++i){
+            mid.push_back(i);
+            combine(i+1,n,k,mid,res);
+            mid.pop_back();
         }
-}
-    
-vector<vector<int> > combine(int n, int k) {
-        set<vector<int> > res;
-        vector<int> cur;
-        for(int i=1;i<=n-k+1;++i){
-            cur.push_back(i);
-            myCom(res,cur,i+1,n,k);
-            cur.pop_back();
-        }
-        vector<vector<int> > final;
-        set<vector<int> >::iterator it = res.begin();
-        while(it!=res.end()){
-            final.push_back(*it);
-            it++;
-        }
-        return final;
-}
+    }
+};
