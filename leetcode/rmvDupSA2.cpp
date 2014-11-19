@@ -30,3 +30,16 @@ public:
         return e;
     }
 };
+class Solution {
+public:
+    int removeDuplicates(int A[], int n) {
+        int l=0;
+        for(int i=0;i<n;){
+            if(i!=0&&A[i]==A[i-1]){
+                A[l++] = A[i++];
+                while(i<n&&A[i]==A[i-1]) i++;
+            }else A[l++] = A[i++];
+        }
+        return l;
+    }
+};
