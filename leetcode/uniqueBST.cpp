@@ -24,6 +24,22 @@ int numTrees(int n) {
 	}
 	return arr[n];
 }
+
+class Solution {
+public:
+    int numTrees(int n) {
+        vector<int> mark(n+1,0);
+        mark[0] = 1;
+        mark[1] = 1;
+        for(int i=2;i<=n;++i){
+            for(int j=1;j<=i;++j){
+                mark[i] += mark[j-1]*mark[i-j];
+            } 
+        }
+        return mark[n];
+    }
+};
+
 int main(int argc,char*argv[]){
 	return 0;
 }
