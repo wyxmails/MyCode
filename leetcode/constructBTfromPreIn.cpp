@@ -32,3 +32,23 @@ TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
 int main(int argc,char*argv[]){
 	return 0;
 }
+
+
+class Solution {
+public:
+    TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
+        int n = preorder.size();
+        return build(preorder,0,n-1,inorder,0,n-1);
+    }
+    TreeNode *build(vector<int>&pre,int lp,int rp,vector<int>&in,int li,int ri){
+        if(lp>rp||li>ri) return NULL;
+        TreeNode *root = new TreeNode(pre[lp]);
+        int i = li;
+        for(;i<=ri;++i){
+            if(in[i]==pre[lp]) break;
+        }
+        root->left = build(pre,lp+1,lp+i-li,in,li,i-1);
+        root->right = build(pre,lp+i-li+1,rp,in,i+1,ri);
+        return root;
+    }
+};
