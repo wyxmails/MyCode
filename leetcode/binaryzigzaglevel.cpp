@@ -91,3 +91,30 @@ vector<vector<int> > zigzagLevelOrder2(TreeNode *root) {
         }
         return res;
 }
+
+class Solution {
+public:
+    vector<vector<int> > zigzagLevelOrder(TreeNode *root) {
+        vector<vector<int> > res;
+        if(root==NULL) return res;
+        vector<vector<TreeNode*> > layers(2);
+        int pre=1,cur=0;
+        layers[cur].push_back(root);
+        bool rev = false;
+        while(!layers[cur].empty()){
+            pre = !pre;
+            cur = !cur;
+            vector<int> mid;
+            layers[cur].clear();
+            for(int i=0;i<layers[pre].size();++i){
+                mid.push_back(layers[pre][i]->val);
+                if(layers[pre][i]->left!=NULL) layers[cur].push_back(layers[pre][i]->left);
+                if(layers[pre][i]->right!=NULL) layers[cur].push_back(layers[pre][i]->right);
+            }
+            if(rev) reverse(mid.begin(),mid.end());
+            rev = !rev;
+            res.push_back(mid);
+        }
+        return res;
+    }
+};
