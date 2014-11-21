@@ -81,3 +81,22 @@ public:
         return false;
     }
 };
+class Solution {
+public:
+    bool isBalanced(TreeNode *root) {
+        int h=0;
+        return balance(root,h);
+    }
+    bool balance(TreeNode*root,int &h){
+        if(root==NULL){
+            h=0;
+            return true;
+        }
+        int hl,hr;
+        if(balance(root->left,hl)&&balance(root->right,hr)){
+            h = max(hl,hr)+1;
+            return (abs(hl-hr)<=1);
+        }
+        return false;
+    }
+};
