@@ -74,3 +74,27 @@ public:
         }
     }
 };
+
+
+class Solution {
+public:
+    int minDepth(TreeNode *root) {
+        int h=0;
+        if(root==NULL) return h;
+        vector<TreeNode*> layers[2];
+        int cur=0,pre=1;
+        layers[cur].push_back(root);
+        while(!layers[cur].empty()){
+            cur = !cur;
+            pre = !pre;
+            h++;
+            layers[cur].clear();
+            for(int i=0;i<layers[pre].size();++i){
+                if(layers[pre][i]->left==NULL&&layers[pre][i]->right==NULL)
+                    return h;
+                if(layers[pre][i]->left!=NULL) layers[cur].push_back(layers[pre][i]->left);
+                if(layers[pre][i]->right!=NULL) layers[cur].push_back(layers[pre][i]->right);
+            }
+        }
+    }
+};
