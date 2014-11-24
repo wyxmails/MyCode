@@ -45,6 +45,28 @@ int maxProfit(vector<int> &prices) {
 	if(left[n-1]>res) res = left[n-1];
 	return res;
 }
+
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+        int n = prices.size();
+        if(n<=1) return 0;
+        vector<int> left(n,0),right(n,0);
+        int miniL=prices[0],maxiR=prices[n-1];
+        for(int i=1;i<n;++i){
+            left[i] = max(left[i-1],prices[i]-miniL);
+            miniL = min(prices[i],miniL);
+            right[n-i-1] = max(right[n-i],maxiR-prices[n-i-1]);
+            maxiR = max(prices[n-i-1],maxiR);
+        }
+        int res = right[0];
+        for(int i=0;i+1<n;++i){
+            res = max(res,left[i]+right[i+1]);
+        }
+        return res;
+    }
+};
+
 int main(int argc,char *argv[]){
 	vector<int> prices;
 	prices.push_back(2);
