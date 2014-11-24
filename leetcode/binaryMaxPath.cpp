@@ -85,3 +85,25 @@ public:
     }
 };
 
+class Solution {
+public:
+    int maxPathSum(TreeNode *root) {
+        if(root==NULL) return 0;
+        int res=root->val;
+        myMax(root,res);
+        return res;
+    }
+    int myMax(TreeNode*root,int &res){
+        if(root->left==NULL&&root->right==NULL){
+            res = max(root->val,res);
+            return root->val;
+        }
+        int hL=0,hR=0;
+        if(root->left!=NULL) hL = myMax(root->left,res);
+        if(root->right!=NULL) hR = myMax(root->right,res);
+        int h = max(root->val,max(hL,hR)+root->val);
+        int cur = max(h,root->val+hL+hR);
+        res = max(res,cur);
+        return h;
+    }
+};
