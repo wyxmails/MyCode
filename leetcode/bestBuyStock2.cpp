@@ -24,6 +24,26 @@ int maxProfit(vector<int> &prices) {
 	}
 	return amt;
 }
+
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+        int n = prices.size();
+        if(n<=1) return 0;
+        int mini = prices[0];
+        int cur = 0;
+        int res = 0;
+        for(int i=1;i<=n;++i){
+            if(i==n||prices[i]<prices[i-1]){
+                if(i!=n) mini = prices[i];
+                res += cur;
+                cur = 0;
+            }else cur = max(cur,prices[i]-mini);
+        }
+        return res;
+    }
+};
+
 int main(int argc,char*argv[]){
 	return 0;
 }
