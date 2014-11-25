@@ -27,6 +27,26 @@ int singleNumber(int A[], int n) {
 	}
 	return tmp;
 }
+
+class Solution {
+public:
+    int singleNumber(int A[], int n) {
+        vector<int> vec(32,0);
+        for(int i=0;i<n;++i){
+            for(int j=0;j<32;++j){
+                if((1<<j)&A[i]){
+                    vec[j]++;
+                }
+            }
+        }
+        int res = 0;
+        for(int i=0;i<32;++i){
+            if(vec[i]%3) res |= (1<<i);
+        }
+        return res;
+    }
+};
+
 int main(){
 	//int arr[10] = {-2,-2,1,1,-3,1,-3,-3,-4,-2};
 	int arr[4] = {2,2,3,2};
