@@ -90,7 +90,7 @@ public:
 							((y[j]-y[k])*(x[i]-x[k])+(x[k]-x[j])*(y[i]-y[k]));
 					double beta = ((y[k]-y[i])*(0.0-x[k])+(x[i]-x[k])*(0.0-y[k]))/
 						((y[j]-y[k])*(x[i]-x[k])+(x[k]-x[j])*(y[i]-y[k]));
-					if(alpha>0.0&&beta>=0.0&&alpha+beta<1.0) res++;
+					if(alpha>0.0&&beta>0.0&&alpha+beta<1.0) res++;
 				}
 			}
 		}
