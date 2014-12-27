@@ -102,3 +102,59 @@ public:
         return res;
     }
 };
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <climits>
+#include <cstring>
+using namespace std;
+
+int done,n,comeback;
+int cur,res;
+vector<int> v;
+bool mark[6];
+
+class BridgeCrossing {
+public:
+    int minTime(vector<int> times) {
+    	n = times.size();
+    	if(n==1) return times[0];
+    	res = INT_MAX;
+    	v=times;
+        myMin(0);
+        return res;
+    }
+    void myMin(bool back){
+    	if(done==n){
+    		res = min(res,cur);
+    		return;
+    	}
+    	if(back){
+    		for(int i=0;i<n;++i){
+    			if(mark[i]){
+    				cur += v[i];
+    				mark[i] = false;
+    				done -= 1;
+    				myMin(!back);
+    				mark[i] = true;
+    				done += 1;
+    				cur -= v[i];
+    			}
+    		}
+    	}else{
+    		for(int i=0;i<n;++i)
+    		for(int j=i+1;j<n;++j){
+    			if(!mark[i]&&!mark[j]){
+    				cur += max(v[i],v[j]);
+    				done += 2;
+    				mark[i]=mark[j] = true;
+    				myMin(!back);
+    				done -= 2;
+    				mark[i]=mark[j] = false;
+    				cur -= max(v[i],v[j]);
+    			}
+    		}
+    	}
+    }
+};
