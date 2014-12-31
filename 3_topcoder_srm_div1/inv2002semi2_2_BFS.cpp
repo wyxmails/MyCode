@@ -209,3 +209,71 @@ public:
 		return -1;
 	}
 };
+
+//mark when pop
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <sstream>
+#include <cstring>
+using namespace std;
+
+const int n=501;
+bool visited[n][n];
+int rim[][2] = {1,0,-1,0,0,1,0,-1};
+
+class nnode{
+public:
+	int x,y,life;
+	nnode(int x,int y,int life):x(x),y(y),life(life){}
+	friend bool operator < (const nnode &a,const nnode&b){
+		return a.life>b.life;
+	}
+};
+
+class Escape{
+public:
+	int lowest(vector <string> harmful, vector <string> deadly){
+		memset(visited,false,sizeof(visited));
+		vector<vector<int> > board(n,vector<int>(n,0));
+		int m = harmful.size();
+		for(int i=0;i<m;++i){
+			stringstream ss(harmful[i]);
+			int x1,y1,x2,y2;
+			ss>>x1>>y1>>x2>>y2;
+			for(int r=min(x1,x2);r<=max(x1,x2);r++){
+				for(int c=min(y1,y2);c<=max(y1,y2);c++){
+					board[r][c] = 1;
+				}
+			}
+		}
+		m = deadly.size();
+		for(int i=0;i<m;++i){
+			stringstream ss(deadly[i]);
+			int x1,y1,x2,y2;
+			ss>>x1>>y1>>x2>>y2;
+			for(int r=min(x1,x2);r<=max(x1,x2);r++){
+				for(int c=min(y1,y2);c<=max(y1,y2);c++){
+					board[r][c] = -1;
+				}
+			}
+		}
+		priority_queue<nnode> mq;
+		nnode nn(0,0,0);
+		mq.push(nn);
+		while(!mq.empty()){
+			nnode cur = mq.top();
+			mq.pop();
+			if(cur.x==n-1&&cur.y==n-1) return cur.life;
+			if(visited[cur.x][cur.y]) continue;
+			visited[cur.x][cur.y] = true;
+			for(int i=0;i<4;++i){
+				int x = cur.x+rim[i][0],y=cur.y+rim[i][1];
+				if(x<0||x>=n||y<0||y>=n||board[x][y]==-1) continue;
+				nnode next(x,y,cur.life+board[x][y]);
+				mq.push(next);
+			}
+		}
+		return -1;
+	}
+};
