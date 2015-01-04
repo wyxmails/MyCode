@@ -64,6 +64,7 @@ Returns: {"A", "AX", "-", "XA", "YXB", "" }
 
 This problem statement is the exclusive and proprietary property of TopCoder, Inc. Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited. (c)2003, TopCoder, Inc. All rights reserved.
 */
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -82,13 +83,11 @@ struct Trie{
 			chi[i] = NULL;
 	}
 };
-struct key{
-	string str;
-	int len;
-	key(string s,int len):str(s),len(len){}
-	friend bool operator<(const key&a,const key&b){
-		if(a.len!=b.len) return a.len>b.len;
-		return a.str<b.str;
+class cmp{
+public:
+	bool operator()(string s1,string s2){
+		if(s1.size()!=s2.size()) return s1.size()>s2.size();
+		return s1<s2;
 	}
 };
 
@@ -97,26 +96,26 @@ public:
 	vector <string> prefixList(vector <string> protein){
 		memset(used,false,sizeof(used));
 		int n = protein.size();
+		/*build trie*/
 		Trie *root = new Trie(' ',0);
-		for(int i=0;i<n;++i){
-			addWord(root,protein[i],0,i);
-		}
-		map<key,vector<int> > mark;
-		get(root,mark,"");
+		for(int i=0;i<n;++i) addWord(root,protein[i],0,i);
+		/*get prefix words maps */
+		map<string,vector<int>,cmp > mark;
+		Get(root,mark,"");
+		//process
 		vector<string> res;
 		vector<string> other;
 		for(auto it = mark.begin();it!=mark.end();++it){
 			vector<int> tmp;
-			if(it->first.len>1&&it->second.size()<=1) continue;
-			for(int i=0;i<it->second.size();++i){
+			if(it->first.size()>1&&it->second.size()<=1) continue;
+			for(int i=0;i<it->second.size();++i)
 				if(!used[it->second[i]]){
 					tmp.push_back(it->second[i]);
 					used[it->second[i]] = true;
 				}
-			}
 			if(tmp.size()>1){
 				string dash = "";
-				dash.append(it->first.len,'-');
+				dash.append(it->first.size(),'-');
 				vector<string> mid;
 				for(int i=0;i<tmp.size();++i)
 					mid.push_back(protein[tmp[i]]);
@@ -124,7 +123,7 @@ public:
 				mid.push_back(dash);
 				res.insert(res.end(),mid.begin(),mid.end());
 			}else{
-				if(tmp.size()>0&&it->first.len<=1) 
+				if(tmp.size()>0&&it->first.size()<=1) 
 					other.push_back(protein[tmp[0]]);
 				else if(tmp.size()>0) used[tmp[0]] = false;
 			}
@@ -136,23 +135,20 @@ public:
 		}
 		return res;
 	}
-	void get(Trie*root,map<key,vector<int> > &mark,string pre){
-		for(int i=0;i<26;++i){
+	void Get(Trie*root,map<string,vector<int>,cmp > &mark,string pre){
+		for(int i=0;i<26;++i)
 			if(root->chi[i]!=NULL){
 				string tmp = pre + root->chi[i]->c;
-				mark[key(tmp,tmp.size())] = root->chi[i]->words;
+				mark[tmp] = root->chi[i]->words;
 				if(root->chi[i]->prefix>1)
-					get(root->chi[i],mark,tmp);
+					Get(root->chi[i],mark,tmp);
 			}
-		}
 	}
 	void addWord(Trie*root,const string&str,int index,int pos){
 		if(index>=str.size()) return;
 		char c = str[index];
 		int ii = int(c-'A');
-		if(root->chi[ii]==NULL){
-			root->chi[ii] = new Trie(c,0);
-		}
+		if(root->chi[ii]==NULL) root->chi[ii] = new Trie(c,0);
 		root->chi[ii]->prefix++;
 		root->chi[ii]->words.push_back(pos);
 		addWord(root->chi[ii],str,index+1,pos);
