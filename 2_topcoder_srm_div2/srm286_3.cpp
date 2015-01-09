@@ -136,51 +136,28 @@ public:
 	string myInfer(string exp){
 		if(exp.size()==0) return "";
 		int p = exp.find_first_of('(');
-		if(p==string::npos){
-			if(exp.find(',')==string::npos) return mark[exp];
-			vector<string> mid;
-			while(exp.size()>0){
-				p = exp.find_first_of(',');
-				if(p==string::npos){mid.push_back(exp); break;}
-				mid.push_back(exp.substr(0,p));
-				exp = exp.substr(p+1);
-			}
-			string res = "";
-			for(int i=0;i<mid.size();++i){
-				if(i!=0) res += ',';
-				res += myInfer(mid[i]);
-			}
-			return res;
-		}
 		int d = exp.find_first_of(',');
-		if(d!=string::npos&&d<p){
-			string s1 = exp.substr(0,d);
-			string s2 = exp.substr(d+1);
-			string res = "";
-			res += myInfer(s1);
-			res += ",";
-			res += myInfer(s2);
-			return res;
+		if(p==string::npos&&d==string::npos) return mark[exp];
+		string s1,s2;
+		if(p==string::npos||(d!=string::npos&&d<p)){
+				s1 = exp.substr(0,d);
+				s2 = exp.substr(d+1);
+				return myInfer(s1)+","+myInfer(s2);
 		}
-		int end = p+1;
-		stack<int> ms;
-		ms.push(p);
-		while(!ms.empty()&&end<exp.size()){
-			if(exp[end]=='(') ms.push(end);
-			else if(exp[end]==')') ms.pop();
-			end++;
+		else{
+			int end = p+1;
+			int cnt = 1;
+			while(cnt>0&&end<exp.size()){
+				if(exp[end]=='(') cnt++;
+				else if(exp[end]==')') cnt--;
+				end++;
+			}
+			if(end==exp.size())
+				return mark[exp.substr(0,p+1)+myInfer(exp.substr(p+1,end-p-2))+")"];
+			s1 = exp.substr(0,end);
+			s2 = exp.substr(end+1);
+			return myInfer(s1)+","+myInfer(s2);
 		}
-		string res = exp.substr(0,p+1);
-		res += myInfer(exp.substr(p+1,end-p-2));
-		if(end!=exp.size()){
-			res += ")";
-			res = mark[res];
-			res += ',';
-			res += myInfer(exp.substr(end+1,exp.size()-end-1));
-			return res;
-		}
-		res += ")";
-		return mark[res];
 	}
 private:
 	unordered_map<string,string> mark;
