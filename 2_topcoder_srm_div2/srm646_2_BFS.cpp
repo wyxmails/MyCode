@@ -86,6 +86,7 @@ struct Q{
 	int x,y,k;
 	Q(int x,int y,int k):x(x),y(y),k(k){}
 	friend bool operator < (const Q&a,const Q&b){
+		//sort order is very important, k must be first
 		if(a.k!=b.k) return a.k>b.k;
 		if(a.x!=b.x) return a.x<b.x;
 		return false;
