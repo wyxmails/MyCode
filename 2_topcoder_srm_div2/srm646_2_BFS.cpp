@@ -131,3 +131,57 @@ public:
 		return res;
 	}
 };
+
+
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+bool visited[2005][2005];
+
+struct Q{
+	int x,y,k;
+	Q(int x,int y,int k):x(x),y(y),k(k){}
+};
+
+class TheGridDivTwo{
+public:
+	int find(vector <int> x, vector <int> y, int k){
+		memset(visited,false,sizeof(visited));
+		int n = x.size();
+		for(int i=0;i<n;++i)
+			visited[y[i]+1000][x[i]+1000] = true;
+		queue<Q> mq;
+		Q nn(1000,1000,0);
+		mq.push(nn);
+		int res = 0;
+		while(!mq.empty()){
+			Q cur = mq.front();
+			mq.pop();
+			if(visited[cur.y][cur.x]) continue;
+			visited[cur.y][cur.x] = true;
+			res = max(res,cur.x-1000);
+			if(cur.k==k) continue;
+			
+			int xx=cur.x+1,yy=cur.y;
+			Q next1(xx,yy,cur.k+1);
+			mq.push(next1);
+
+			xx=cur.x-1,yy=cur.y;
+			Q next2(xx,yy,cur.k+1);
+			mq.push(next2);
+
+			xx=cur.x,yy=cur.y+1;
+			Q next3(xx,yy,cur.k+1);
+			mq.push(next3);
+
+			xx=cur.x,yy=cur.y-1;
+			Q next4(xx,yy,cur.k+1);
+			mq.push(next4);
+		}
+		return res;
+	}
+};
