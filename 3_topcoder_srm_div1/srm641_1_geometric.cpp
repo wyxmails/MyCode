@@ -1,4 +1,5 @@
 /*
+
 Problem Statement
     
 We have chosen a finite set of points in the plane. You are given their coordinates in the vector <int>s x and y: for each valid i, there is a point with coordinates (x[i],y[i]). We are interested in triangles with the following properties:
@@ -8,15 +9,15 @@ Return the number of such triangles. Note that the constraints guarantee that th
 Definition
     
 Class:
-TrianglesContainOriginEasy
+TrianglesContainOrigin
 Method:
 count
 Parameters:
 vector <int>, vector <int>
 Returns:
-int
+long long
 Method signature:
-int count(vector <int> x, vector <int> y)
+long long count(vector <int> x, vector <int> y)
 (be sure your method is public)
 Limits
     
@@ -28,11 +29,11 @@ Stack limit (MB):
 256
 Constraints
 -
-x and y will contain between 3 and 50 elements, inclusive.
+x and y will contain between 3 and 2500 elements, inclusive.
 -
 x and y will contain the same number of elements.
 -
-Each element of x and y will be between -1,000 and 1,000, inclusive.
+Each element of x and y will be between -10,000 and 10,000, inclusive.
 -
 No two points will be the same.
 -
@@ -75,26 +76,27 @@ This problem statement is the exclusive and proprietary property of TopCoder, In
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-class TrianglesContainOriginEasy{
+class TrianglesContainOrigin{
 public:
-	int count(vector <int> x, vector <int> y){
-		int res=0;
-		int n = x.size();
-		if(n<3) return res;
-		for(int i=0;i+2<n;++i){
-			for(int j=i+1;j+1<n;++j){
-				for(int k=j+1;k<n;++k){
-					double alpha = ((y[j]-y[k])*(0.0-x[k])+(x[k]-x[j])*(0.0-y[k]))/
-							((y[j]-y[k])*(x[i]-x[k])+(x[k]-x[j])*(y[i]-y[k]));
-					double beta = ((y[k]-y[i])*(0.0-x[k])+(x[i]-x[k])*(0.0-y[k]))/
-						((y[j]-y[k])*(x[i]-x[k])+(x[k]-x[j])*(y[i]-y[k]));
-					if(alpha>0.0&&beta>0.0&&alpha+beta<1.0) res++;
-				}
-			}
+	long long count(vector <int> x, vector <int> y){
+		double pi = atan(1.0)*4;
+		long long n = x.size();
+		vector<double> mark(2*n);
+		for(long long i=0;i<n;++i){
+			mark[2*i] = atan2(y[i],x[i]);
+			mark[2*i+1] = atan2(y[i],x[i])+ pi*2;
+		}
+		sort(mark.begin(),mark.end());
+		long long res = n*(n-1)*(n-2)/6;
+		long long cur=0;
+		for(int i=0;i<n;++i){
+			while(cur+1<2*n&&mark[cur+1]<mark[i]+pi-1e-9) cur++;
+			long long len = cur-i;
+			if(len>0) res -= len*(len-1)/2;
 		}
 		return res;
 	}
 };
-
