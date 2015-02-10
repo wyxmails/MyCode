@@ -80,23 +80,27 @@ This problem statement is the exclusive and proprietary property of TopCoder, In
 
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 using namespace std;
+
+int mark[101][101];
 
 class CartInSupermarketEasy{
 public:
 	int calc(int N, int K){
-	  if(N<=1) return N;
-		if(K==0) return N;
-		int cut=0;
-		int lg = log2(N-1)+1;
-		for(int i=1;i<=lg;i*=2)
-			cut += i;
-		if(cut<=K) return lg+1;
-		int pa=0;
-		for(int i=0;i<=K;++i)
-			pa += i;
-		int x = (N+pa)/(K+1);
-		while((K+1)*x-pa+1<N) x++;
-		return x+1;
+		memset(mark,-1,sizeof(mark));
+		return myCal(N,K);
+	}
+	int myCal(int n,int k){
+		if(n<=1||k==0) return n;
+		if(mark[n][k]!=-1) return mark[n][k];
+		int res = n;
+		for(int i=1;i<n;++i){
+			for(int j=0;j<k;++j){
+				res = min(res,max(myCal(i,j),myCal(n-i,k-j-1))+1);
+			}
+		}
+		mark[n][k] = res;
+		return res;
 	}
 };
