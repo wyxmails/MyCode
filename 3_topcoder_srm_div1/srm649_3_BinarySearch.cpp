@@ -93,6 +93,7 @@ public:
 	int calcmin(vector <int> a, int b){
 		int l=0,r=*max_element(a.begin(),a.end());
 		if(b==0||r<=1) return r;
+		//binary search
 		while(l<r){
 			int m = l + (r-l)/2;
 			if(OK(a,b,m)) r = m;
@@ -113,11 +114,13 @@ public:
 	}
 	bool getMinSplit(int n,int maxi,int&spl,int max_cuts){
 		long long l=max(0,n/maxi-1),r=max_cuts;
+		//binary search
 		while(l<=r){
 			long long cut = (l+r)/2;
 			long long reach = 1;
 			long long minutes=maxi;
 			long long left_cuts = cut;
+			//each time the groups double, so need double cuts
 			while(left_cuts>=reach&&minutes>0){
 				left_cuts -= reach;
 				reach *= 2;
@@ -125,6 +128,12 @@ public:
 			}
 			if(minutes<=0||(left_cuts>0&&minutes==1)) r = cut-1;
 			else{
+			//if the left_cuts is insufficient, 
+			//we can generate 2*left_cuts groups of minutes-1
+			//because as we cut the left_cuts groups, other groups will minus 1
+			//so, the new generated 2*left_cuts groups have at most minutes-1
+			//at the same time, the original reach should minus left_cuts,
+			//because we use left_cuts groups of the reach groups
 				reach -= left_cuts;
 				long long res = minutes*reach+2*left_cuts*(minutes-1);
 				if(res<n) l = cut+1;
