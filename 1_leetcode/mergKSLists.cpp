@@ -39,3 +39,42 @@ public:
         }
     }
 };
+
+//use heap(priority_queue)
+ class mycmp{
+     bool rev;
+public:
+    mycmp(const bool &rev=false):rev(rev){}
+    bool operator()(const ListNode* a,const ListNode* b)  const{
+        if(rev) return a->val<b->val;
+        else return a->val>b->val;
+    }
+ };
+class Solution {
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        typedef priority_queue<ListNode*,vector<ListNode*>,mycmp> mtype;
+        mtype mq;
+        int k = lists.size();
+        for(int i=0;i<k;++i)
+            if(lists[i]!=NULL)
+                mq.push(lists[i]);
+        ListNode *head,*tail;
+        head = tail = NULL;
+        if(!mq.empty()) {
+            ListNode *cur = mq.top();
+            mq.pop();
+            head = tail = cur; 
+            if(cur->next!=NULL) mq.push(cur->next);
+        }
+        while(!mq.empty()){
+            ListNode *cur = mq.top();
+            mq.pop();
+            tail->next = cur;
+            tail = cur;
+            if(cur->next!=NULL) mq.push(cur->next);
+        }
+        if(tail!=NULL) tail->next = NULL;
+        return head;
+    }
+};
