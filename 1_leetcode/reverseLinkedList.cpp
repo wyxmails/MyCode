@@ -31,3 +31,27 @@ public:
         return nh;
     }
 };
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class SolutionRec {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==NULL) return head;
+        ListNode *nh = NULL;
+        ListNode *run = head;
+        while(head!=NULL){
+            head = head->next;
+            run->next = nh;
+            nh = run;
+            run = head;
+        }
+        return nh;
+    }
+};
