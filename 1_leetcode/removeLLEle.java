@@ -19,9 +19,8 @@ public class Solution {
     public ListNode removeElements(ListNode head, int val) {
         if(head==null) return head;
         if(head.val==val) return removeElements(head.next,val);
-        ListNode next = head.next;
-        head.next = null;
-        next = removeElements(next,val);
+        ListNode next = null;
+        next = removeElements(head.next,val);
         head.next = next;
         return head;
     }
