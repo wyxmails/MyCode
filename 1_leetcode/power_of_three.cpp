@@ -20,3 +20,14 @@ public:
         return (n==1);
     }
 };
+
+
+class Solution2 {
+public:
+    bool isPowerOfThree(int n) {
+        int max_power3 = 1162261467;
+        if(n<=0) return false;
+        if(max_power3%n==0) return true;
+        return false;
+    }
+};
