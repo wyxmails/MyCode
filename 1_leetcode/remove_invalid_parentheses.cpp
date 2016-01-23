@@ -11,6 +11,10 @@ Examples:
 ")(" -> [""]
 
 */
+/* Prune solution:
+compare the current removed elements with n-max_len,
+if already bigger, no need to go on, it is not one of the best solution
+*/
 
 class Solution {
 public:
