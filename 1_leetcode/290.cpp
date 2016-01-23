@@ -1,5 +1,5 @@
 /*
-Word Pattern My Submissions Question Solution 
+290. Word Pattern My Submissions Question Solution 
 Total Accepted: 3998 Total Submissions: 14996 Difficulty: Easy
 Given a pattern and a string str, find if str follows the same pattern.
 
