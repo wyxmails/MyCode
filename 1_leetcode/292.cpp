@@ -1,6 +1,7 @@
 /*
-Nim Game My Submissions Question Solution 
-Total Accepted: 2634 Total Submissions: 5463 Difficulty: Easy
+292. Nim Game My Submissions Question
+Total Accepted: 38060 Total Submissions: 74873 Difficulty: Easy
+
 You are playing the following Nim Game with your friend: There is a heap of stones on the table, 
 each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. 
 You will take the first turn to remove the stones.
