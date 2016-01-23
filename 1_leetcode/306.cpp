@@ -1,5 +1,5 @@
 /*
-6. Additive Number My Submissions Question
+306. Additive Number My Submissions Question
 Total Accepted: 5206 Total Submissions: 21504 Difficulty: Medium
 Additive number is a string whose digits can form additive sequence.
 
